@@ -43,6 +43,7 @@ class Logger(logging.getLoggerClass()):
     """Date output format"""
 
     LOGFORMAT = '%(asctime)s.%(msecs)03d %(process)s:%(thread)u %(levelname)-8s %(module)15.15s %(lineno)-4s: %(message)s'
+    """Default log format for all handlers. This can change via ``Logger.LOGFORMAT = ...`` before calling ``init()``"""
 
     TERMDEFAULTS = {
        "color": True,

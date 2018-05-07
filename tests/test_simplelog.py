@@ -32,7 +32,6 @@ class TestSimpleLog(unittest.TestCase):
         """
         lg = logging.getLogger("simplelog")
 
-
         # Put in StringIO mode
         strio = logging.getLoggerClass().mockHandler(0)
         logging.debug("Hello\nWorld")
@@ -57,6 +56,24 @@ class TestSimpleLog(unittest.TestCase):
 
         # We expect 4 lines in pretty mode
         self.assertEqual(4, len(strio.getvalue().splitlines()))
+        strio.close()
+
+
+        strio = logging.getLoggerClass().mockHandler(0)
+        logging.debug(["hello", "world"])
+        logging.getLoggerClass().restoreHandler(0)
+
+        # We expect 4 lines in pretty mode
+        self.assertEqual(4, len(strio.getvalue().splitlines()))
+        strio.close()
+
+        strio = logging.getLoggerClass().mockHandler(0)
+        logging.debug(("hello", "world"))
+        logging.getLoggerClass().restoreHandler(0)
+
+        # We expect 4 lines in pretty mode
+        self.assertEqual(4, len(strio.getvalue().splitlines()))
+        strio.close()
 
 
     def test_003_pretty_false_split_true(self):
@@ -118,6 +135,22 @@ class TestSimpleLog(unittest.TestCase):
         logging.getLoggerClass().restoreHandler(0)
 
         self.assertEqual(2, len(strio.getvalue().splitlines()))
+
+    def test_007_logFun(self):
+        """
+        Get a new logger and ...
+        """
+
+
+        # Put in StringIO mode
+        strio = logging.getLoggerClass().mockHandler(0)
+        logging.getLoggerClass().logFun()
+        # Now, put it back!
+        logging.getLoggerClass().restoreHandler(0)
+
+        # Make sure 2 lines printed...
+        self.assertEqual(5, len(strio.getvalue().splitlines()))
+
 
     #
     # File tests below here

@@ -41,7 +41,7 @@ def main():
 
 
     if not args.tests:
-        suite = unittest.TestLoader().discover(os.path.dirname(__file__) + '/tests')
+        suite = unittest.TestLoader().discover(ROOTDIR + '/tests')
     else:
         lg.info(' * Running specific tests')
 
