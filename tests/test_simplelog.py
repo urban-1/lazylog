@@ -26,6 +26,10 @@ class TestSimpleLog(unittest.TestCase):
         Logger.init(LOGDIR, termSpecs=termSpecs)
 
 
+    @classmethod
+    def tearDown(cls):
+        rmlog()
+
     def test_001_testmocking(self):
         """
         Get a new logger and ...
@@ -140,8 +144,6 @@ class TestSimpleLog(unittest.TestCase):
         """
         Get a new logger and ...
         """
-
-
         # Put in StringIO mode
         strio = logging.getLoggerClass().mockHandler(0)
         logging.getLoggerClass().logFun()

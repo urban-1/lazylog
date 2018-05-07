@@ -2,7 +2,7 @@
 
 ## Developing
 
-Create a Virtual Env and install coverage
+Create a Virtual Environment and install coverage
 
     python3 -m venv venv
     . venv/bin/activate
