@@ -1,9 +1,10 @@
 import os
-import unittest
-import traceback
+import sys
 import logging
-from simplelog import Logger
+import unittest
 import tempfile
+import traceback
+from simplelog import Logger
 
 LOGDIR = tempfile.gettempdir()
 LOGFILE = "tmp-simple.log"
@@ -45,10 +46,11 @@ class TestSimpleLog(unittest.TestCase):
         # Make sure 2 lines printed...
         self.assertEqual(2, len(strio.getvalue().splitlines()))
 
-        # Finally, check we are back in stderr
-        with self.assertLogs('simplelog', level='INFO') as cm:
-            lg.info("Hello\nWorld")
-        self.assertEqual(cm.output, ['INFO:simplelog:Hello\nWorld'])
+        if sys.version_info[0] >= 3:
+            # Finally, check we are back in stderr
+            with self.assertLogs('simplelog', level='INFO') as cm:
+                lg.info("Hello\nWorld")
+            self.assertEqual(cm.output, ['INFO:simplelog:Hello\nWorld'])
 
     def test_002_pretty(self):
         """

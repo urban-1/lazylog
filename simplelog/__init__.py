@@ -6,7 +6,10 @@ import os
 import stat
 import copy
 import collections
-from io import StringIO
+try:
+    from StringIO import StringIO
+except:
+    from io import StringIO
 
 
 # http://docs.python.org/library/logging.html#logrecord-attributes
