@@ -4,6 +4,7 @@ import logging
 import logging.handlers
 import os
 import stat
+import copy
 import collections
 from io import StringIO
 
@@ -43,12 +44,21 @@ class Logger(logging.getLoggerClass()):
 
     LOGFORMAT = '%(asctime)s.%(msecs)03d %(process)s:%(thread)u %(levelname)-8s %(module)15.15s %(lineno)-4s: %(message)s'
 
-    TERMSPECS = {
+    TERMDEFAULTS = {
        "color": True,
        "splitLines": True,
        "level": logging.DEBUG,
        "pretty": True
     }
+    """Terminal default settings"""
+
+    FILEDEFAULTS = {
+       "color": False,
+       "splitLines": False,
+       "level": logging.INFO,
+       "pretty": False
+    }
+    """File default settings"""
 
     @classmethod
     def _chkdir(cls):
@@ -120,7 +130,13 @@ class Logger(logging.getLoggerClass()):
         if "format" not in specs or specs["format"] == "default":
             pass
         elif specs["format"] == "console":
-            formatter = ColorFormatter(cls.LOGFORMAT, datefmt=cls.DATEFORMAT, color=False)
+            specs = Logger.parseSpecs(specs, cls.FILEDEFAULTS)
+            formatter = ColorFormatter(
+                cls.LOGFORMAT,
+                datefmt=cls.DATEFORMAT,
+                color=False,
+                pretty=specs["pretty"],
+                splitLines=specs["splitLines"])
         elif specs["format"] == "json":
             # formatter = JSONFormatter(cls.LOGFORMAT, datefmt=cls.DATEFORMAT)
             raise NotImplementedError("Hmmm... JSON not there yet")
@@ -153,7 +169,7 @@ class Logger(logging.getLoggerClass()):
         cls._chkdir()
 
         # Merge with defaults...
-        termSpecs = merge_dicts(termSpecs, cls.TERMSPECS.copy())
+        termSpecs = Logger.parseSpecs(termSpecs, cls.TERMDEFAULTS)
 
         # Disable default logger
         root = logging.getLogger()
@@ -163,7 +179,6 @@ class Logger(logging.getLoggerClass()):
         # Console logger
         console = logging.StreamHandler()
         console.setLevel(termSpecs["level"])
-
         formatter = ColorFormatter(
             cls.LOGFORMAT,
             datefmt=cls.DATEFORMAT,
@@ -228,6 +243,22 @@ class Logger(logging.getLoggerClass()):
         h.stream = h.old_stream
         del h.old_stream
 
+    @staticmethod
+    def parseSpecs(specs, defaults):
+        """
+        Merge the user specs with the defaults given (terminal or file). Also
+        ensure that if ``pretty`` is set, ``splitLines`` is also set (implied)
+        """
+        specs = merge_dicts(specs, defaults.copy())
+
+        # Pretty overrides split lines
+        specs["pretty"] = specs["pretty"] if "pretty" in specs else False
+        specs["splitLines"] = specs["splitLines"] if "splitLines" in specs else False
+        if specs["pretty"] and not specs["splitLines"]:
+            specs["splitLines"] = True
+
+        return specs
+
 
 class ColorFormatter(logging.Formatter):
     """
@@ -279,21 +310,30 @@ class ColorFormatter(logging.Formatter):
         """
         levelname = record.levelname
 
+        # Keep reference and copy only if required
+        tmp_record = record
+
         # NOTE: `message` is formatted, `msg` is raw
         if self.pretty and (
             isinstance(record.msg, dict) or
             isinstance(record.msg, tuple) or
             isinstance(record.msg, list)
             ):
-            record.msg = pretty(record.msg)
+
+            # Copy so we do not modify the original message
+            tmp_record = copy.copy(record)
+            tmp_record.msg = pretty(tmp_record.msg)
 
 
-        msg = logging.Formatter.format(self, record)
+        msg = logging.Formatter.format(self, tmp_record)
 
 
-        if self.splitLines and record.message != "":
-            parts = msg.split(record.message)
+        if self.splitLines and tmp_record.message != "":
+            parts = msg.split(tmp_record.message)
             msg = msg.replace('\n', '\n' + parts[0])
+        # Escape new lines so the full message is in a single line
+        elif not self.splitLines and tmp_record.message != "":
+            msg = tmp_record.message.replace("\n", "\\n")
 
         # The background is set with 40 plus the number of the color,
         # and the foreground with 30
@@ -327,6 +367,9 @@ class JSONFormatter(logging.Formatter):
             "FIXME": ""
         })
 
+#
+# Helpers and utilities
+#
 def pretty_recursive(value, htchar='\t', lfchar='\n', indent=0):
     """
     Pretty printing, full creadit to:

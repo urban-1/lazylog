@@ -9,6 +9,7 @@ import re
 import sys
 import argparse
 import unittest
+import tempfile
 import logging as lg
 
 # Set the paths
@@ -17,7 +18,7 @@ sys.path.append(ROOTDIR)
 
 from simplelog import Logger
 
-LOGDIR = "/tmp"
+LOGDIR = tempfile.gettempdir()
 log_file = "simplelogtests.log"
 result = False
 
@@ -30,12 +31,12 @@ def main():
     args = parser.parse_args()
 
     # Setup Logging
-    fileSpecs = [{"filename": log_file, "level":lg.DEBUG}]
+    #fileSpecs = [{"filename": log_file, "level":lg.DEBUG}]
     termSpecs = {"color": True, "splitLines": True, "level": lg.DEBUG }
     if not args.debug:
         termSpecs["level"] = lg.WARNING
 
-    Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=fileSpecs)
+    Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=None)
     lg.getLogger("tests").setLevel(level=lg.DEBUG)
 
 
