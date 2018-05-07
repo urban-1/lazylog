@@ -11,10 +11,14 @@ Yet another python logger that aims to:
 -   "Fix some issues" of the default logging facility:
     -   Handles new-lines in messages by either re-adding the preamble or escaping
         the new-line characters
-    -   Adds color to the console, based to the log level
+    -   Adds color to the console, based on the log level
     -   Prettifies basic structures (list, dicts and tuples)
     -   Handles logfile permissions for multi-user deployments
     -   Supports easy logger mocking (into StringIO)
+
+
+## Usage
+
 
 
 ## Developing

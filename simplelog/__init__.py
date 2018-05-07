@@ -58,7 +58,7 @@ class Logger(logging.getLoggerClass()):
 
     FILEDEFAULTS = {
        "color": False,
-       "splitLines": False,
+       "splitLines": True,
        "level": logging.INFO,
        "pretty": False
     }
@@ -131,9 +131,7 @@ class Logger(logging.getLoggerClass()):
             maxBytes=specs["maxBytes"] if "maxBytes" in specs else cls.MAXBYTES)
 
         formatter = logging.Formatter(cls.LOGFORMAT, datefmt=cls.DATEFORMAT)
-        if "format" not in specs or specs["format"] == "default":
-            pass
-        elif specs["format"] == "console":
+        if "format" not in specs or specs["format"] == "console":
             specs = Logger.parseSpecs(specs, cls.FILEDEFAULTS)
             formatter = ColorFormatter(
                 cls.LOGFORMAT,
@@ -141,6 +139,9 @@ class Logger(logging.getLoggerClass()):
                 color=False,
                 pretty=specs["pretty"],
                 splitLines=specs["splitLines"])
+
+        elif specs["format"] == "default":
+            pass
         elif specs["format"] == "json":
             # formatter = JSONFormatter(cls.LOGFORMAT, datefmt=cls.DATEFORMAT)
             raise NotImplementedError("Hmmm... JSON not there yet")
@@ -336,8 +337,8 @@ class ColorFormatter(logging.Formatter):
             parts = msg.split(tmp_record.message)
             msg = msg.replace('\n', '\n' + parts[0])
         # Escape new lines so the full message is in a single line
-        elif not self.splitLines and tmp_record.message != "":
-            msg = tmp_record.message.replace("\n", "\\n")
+        elif not self.splitLines and msg != "":
+            msg = msg.replace("\n", "\\n")
 
         # The background is set with 40 plus the number of the color,
         # and the foreground with 30
