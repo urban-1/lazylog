@@ -121,6 +121,14 @@ behaviour with the only difference being the log format:
 <pre style="color:white; background-color:black"><code style="color:white; background-color:black">08-05-2018 21:30:05.312 12648:140218785630016 INFO     console_customi 31  : Boooriiiing
 </code></pre>
 
+Finally, in the `init()` function you can override the default format and date
+format by passing `fmt` and `datefmt` parameters. The defaults are:
+
+```
+DATEFORMAT = '%d-%m-%Y %H:%M:%S'
+LOGFORMAT = '%(asctime)s.%(msecs)03d %(process)s:%(thread)u %(levelname)-8s %(module)15.15s %(lineno)-4s: %(message)s'
+```
+
 ### Files
 
 In case where you (the developer) are not the one running the code, you most
@@ -203,7 +211,7 @@ logging.debug({"what": "dict-based logging"}, extra={"user": "asd32"})
 logging.info(["anything", "json", "serializable", "see OBJECT"], extra={"foo":"bar"})
 ```
 
-and the results will be:
+and the results will be (each one in a single line in the logfile):
 
 ```
 {
