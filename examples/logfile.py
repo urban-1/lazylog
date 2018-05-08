@@ -52,7 +52,7 @@ print("\n3. Reconfiguring...\n")
 fileSpecs = [{"filename": LOGFILE, "level":logging.DEBUG, "pretty":True}]
 Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=fileSpecs)
 
-logging.info({"or": "enable prettifing!"})
+logging.info({"or": "enable prettifying!"})
 
 print("\n\nFile Contents:\n")
 with open(LOGPATH) as f:
@@ -69,6 +69,25 @@ Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=fileSpecs)
 
 logging.info("You\n can set the \n format to\n default")
 logging.warning("But I don't like it...")
+
+print("\n\nFile Contents:\n")
+with open(LOGPATH) as f:
+    print(f.read())
+
+os.unlink(LOGPATH)
+
+
+#
+# 5. JSON formatter
+#
+print("\n5. Reconfiguring...\n")
+fileSpecs = [{"filename": LOGFILE, "level":logging.DEBUG, "format":"json"}]
+Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=fileSpecs)
+
+logging.info("Simple str message")
+logging.warning("Message with metadata", extra={"user": "nwj12"})
+logging.debug({"what": "dict-based logging"}, extra={"user": "asd32"})
+logging.info(["anything", "json", "serializable", "see OBJECT"], extra={"foo":"bar"})
 
 print("\n\nFile Contents:\n")
 with open(LOGPATH) as f:

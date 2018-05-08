@@ -69,10 +69,31 @@ special:
 
 The output should look like:
 
-.. figure:: https://gitlab.com/urban-1/simplelog/raw/master/examples/images/console-defaults.png
-   :alt: Default console settings
+.. raw:: html
 
-   console with default settings
+   <pre style="color:white; font-weight:normal;background-color:black">
+   <code style="color:white; background-color:black"><span style="color:gray;">08-05-2018 21:40:16.943 13859:139943539918656 DEBUG            console 17  : This is an example log line</span>
+   <span style="color:teal;">08-05-2018 21:40:16.943 13859:139943539918656 INFO             console 18  : This logger handles
+   08-05-2018 21:40:16.943 13859:139943539918656 INFO             console 18  : New
+   08-05-2018 21:40:16.943 13859:139943539918656 INFO             console 18  : Lines</span>
+   <span style="color:#9E5C15;">08-05-2018 21:40:16.943 13859:139943539918656 WARNING          console 19  : (dict) {
+   08-05-2018 21:40:16.943 13859:139943539918656 WARNING          console 19  :    'and': (
+   08-05-2018 21:40:16.943 13859:139943539918656 WARNING          console 19  :            'colors',
+   08-05-2018 21:40:16.943 13859:139943539918656 WARNING          console 19  :            '!'
+   08-05-2018 21:40:16.943 13859:139943539918656 WARNING          console 19  :    ),
+   08-05-2018 21:40:16.943 13859:139943539918656 WARNING          console 19  :    'like': [
+   08-05-2018 21:40:16.943 13859:139943539918656 WARNING          console 19  :            'l',
+   08-05-2018 21:40:16.943 13859:139943539918656 WARNING          console 19  :            'i',
+   08-05-2018 21:40:16.943 13859:139943539918656 WARNING          console 19  :            's',
+   08-05-2018 21:40:16.943 13859:139943539918656 WARNING          console 19  :            't',
+   08-05-2018 21:40:16.943 13859:139943539918656 WARNING          console 19  :            's'
+   08-05-2018 21:40:16.943 13859:139943539918656 WARNING          console 19  :    ],
+   08-05-2018 21:40:16.943 13859:139943539918656 WARNING          console 19  :    'also': 'handles basic structures'
+   08-05-2018 21:40:16.943 13859:139943539918656 WARNING          console 19  : }</span>
+   <span style="color:red;font-weight:bold;">08-05-2018 21:40:16.943 13859:139943539918656 ERROR            console 20  : Errors stick out</span>
+   <span style="color:yellow;font-weight:bold;">08-05-2018 21:40:16.943 13859:139943539918656 CRITICAL         console 21  : but critical sticks out more...</span>
+   </code></pre>
+
 Customizing
 ~~~~~~~~~~~
 
@@ -92,10 +113,13 @@ don't like, so
 
 gives you:
 
-.. figure:: https://gitlab.com/urban-1/simplelog/raw/master/examples/images/console-color-only.png
-   :alt: Console colour only
+.. raw:: html
 
-   Console with color only
+   <pre style="color:white; background-color:black"><code><span style="color:gray; background-color:black">08-05-2018 21:19:40.688 11639:140599510849344 DEBUG    console_customi 18  : You can remove all the fancy stuff:</span>
+   <span style="color:teal; background-color:black">08-05-2018 21:19:40.689 11639:140599510849344 INFO     console_customi 19  : ... keeping\n each message\n in its own line</span>
+   <span style="color:#9E5C15; background-color:black">08-05-2018 21:19:40.689 11639:140599510849344 WARNING  console_customi 20  : {'like': ['l', 'i', 's', 't', 's'], 'and': 'flatten structures'}</span>
+   </code></pre>
+
 ... while initializing with:
 
 ::
@@ -104,17 +128,22 @@ gives you:
 
 gives you:
 
-.. figure:: https://gitlab.com/urban-1/simplelog/raw/master/examples/images/console-no-pretty.png
-   :alt: Console no prettifying structs
+.. raw:: html
 
-   Console without prettifying structs
+   <pre style="color:white; background-color:black"><code><span style="color:red;font-weight:bold; background-color:black">08-05-2018 21:30:05.312 12648:140218785630016 ERROR    console_customi 25  : However,
+   08-05-2018 21:30:05.312 12648:140218785630016 ERROR    console_customi 25  : You can choose to split
+   08-05-2018 21:30:05.312 12648:140218785630016 ERROR    console_customi 25  : lines</span>
+   <span style="color:yellow;font-weight:bold; background-color:black">08-05-2018 21:30:05.312 12648:140218785630016 CRITICAL console_customi 26  : ['but', 'not', 'prettify\nstructs']</span>
+   </code></pre>
+
 Of course you can disable everything, falling back to the default
 ``logging`` behaviour with the only difference being the log format:
 
-.. figure:: https://gitlab.com/urban-1/simplelog/raw/master/examples/images/console-boring.png
-   :alt: Boring...
+.. raw:: html
 
-   Console boring
+   <pre style="color:white; background-color:black"><code style="color:white; background-color:black">08-05-2018 21:30:05.312 12648:140218785630016 INFO     console_customi 31  : Boooriiiing
+   </code></pre>
+
 Files
 ~~~~~
 
@@ -168,7 +197,8 @@ with ``splitLines: False`` you get:
 
 ::
 
-    logging.info("Like console\nYou can avoid\nsplitting lines"
+    # Code:
+    # logging.info("Like console\nYou can avoid\nsplitting lines")
 
     08-05-2018 15:57:24.119 16142:140509479982912 INFO             logfile 42  : Like console\nYou can avoid\nsplitting lines
 
@@ -176,21 +206,98 @@ while with ``pretty: True`` you get:
 
 ::
 
-    logging.info({"or": "enable prettifing!"})
+    # Code:
+    # logging.info({"or": "enable prettifying!"})
 
     08-05-2018 15:57:24.120 16142:140509479982912 INFO             logfile 55  : (dict) {
-    08-05-2018 15:57:24.120 16142:140509479982912 INFO             logfile 55  :    'or': 'enable prettifing!'
+    08-05-2018 15:57:24.120 16142:140509479982912 INFO             logfile 55  :    'or': 'enable prettifying!'
     08-05-2018 15:57:24.120 16142:140509479982912 INFO             logfile 55  : }
 
-Format: default
-^^^^^^^^^^^^^^^
+JSON format
+^^^^^^^^^^^
+
+JSON logging is most useful when we need to index our logs to a database
+or stream them and generally for machine-to-machine communication. At
+the moment, ``simplelog`` does not support JSON logging on the terminal
+but does support it for files. To enable it, initialize with:
+
+::
+
+    fileSpecs = [{"filename": LOGFILE, "level":logging.DEBUG, "format":"json"}]
+
+The following ways of logging are supported:
+
+::
+
+    logging.info("Simple str message")
+    logging.warning("Message with metadata", extra={"user": "nwj12"})
+    logging.debug({"what": "dict-based logging"}, extra={"user": "asd32"})
+    logging.info(["anything", "json", "serializable", "see OBJECT"], extra={"foo":"bar"})
+
+and the results will be:
+
+::
+
+    {
+        "filename": "logfile.py",
+        "module": "logfile",
+        "timestamp": 1525799704.8904743,
+        "message": "Simple str message",
+        "thread": 140193498228544,
+        "levelname": "INFO",
+        "process": 27529
+    }
+
+    {
+        "filename": "logfile.py",
+        "user": "nwj12",
+        "module": "logfile",
+        "timestamp": 1525799704.890644,
+        "message": "Message with metadata",
+        "thread": 140193498228544,
+        "levelname": "WARNING",
+        "process": 27529
+    }
+
+    {
+        "filename": "logfile.py",
+        "user": "asd32",
+        "module": "logfile",
+        "what": "dict-based logging",
+        "timestamp": 1525799704.8907733,
+        "message": "",
+        "process": 27529,
+        "levelname": "DEBUG",
+        "thread": 140193498228544
+    }
+
+    {
+        "filename": "logfile.py",
+        "timestamp": 1525799704.8909438,
+        "module": "logfile",
+        "thread": 140193498228544,
+        "foo": "bar",
+        "message": "",
+        "process": 27529,
+        "levelname": "INFO",
+        "object": [
+            "anything",
+            "json",
+            "serializable",
+            "see OBJECT"
+        ]
+    }
+
+Default format
+^^^^^^^^^^^^^^
 
 I would really not suggest this... but you get
 
 ::
 
-    logging.info("You\n can set the \n format to\n default")
-    logging.warning("But I don't like it...")
+    # Code:
+    # logging.info("You\n can set the \n format to\n default")
+    # logging.warning("But I don't like it...")
 
     08-05-2018 15:57:24.120 16142:140509479982912 INFO             logfile 70  : You
      can set the
