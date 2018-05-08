@@ -76,7 +76,7 @@ logging.warning({"and": "flatten structures", "like": list("lists")})
 
 gives you:
 
-![console color only settings](https://gitlab.com/urban-1/simplelog/raw/master/examples/images/console-color-only.png "Console colour only")
+![Console with color only](https://gitlab.com/urban-1/simplelog/raw/master/examples/images/console-color-only.png "Console colour only")
 
 ... while initializing with:
 
@@ -84,12 +84,86 @@ gives you:
 
 gives you:
 
-![Console no prettifying structs settings](https://gitlab.com/urban-1/simplelog/raw/master/examples/images/console-no-pretty.png "Console no prettifying structs")
+![Console without prettifying structs](https://gitlab.com/urban-1/simplelog/raw/master/examples/images/console-no-pretty.png "Console no prettifying structs")
 
 Of course you can disable everything, falling back to the default `logging`
 behaviour with the only difference being the log format:
 
-![Console boring settings](https://gitlab.com/urban-1/simplelog/raw/master/examples/images/console-boring.png "Boring...")
+![Console boring](https://gitlab.com/urban-1/simplelog/raw/master/examples/images/console-boring.png "Boring...")
+
+### Files
+
+In case where you (the developer) are not the one running the code, you most
+probably need a log-file! If you application is a CLI one, probably the end-user
+should not be seeing all the debugging info, but warnings and errors only. Python
+logging facility supports multiple handlers working simultaneously and `simplelog`
+allows you to use this feature hassle-free. To define a file logger do:
+
+    termSpecs = {"level": logging.DEBUG}
+    fileSpecs = [{"filename": LOGFILE, "level":logging.DEBUG}]
+    Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=fileSpecs)
+
+The above creates a file in `LOGDIR/LOGFILE` with the default settings which are:
+
+    {
+        'format': 'console'
+        'backupCount': 20
+        'maxBytes': 10MB
+        'color': False,
+        'splitLines': True,
+        'pretty': False
+    }
+
+-   `backupCount`: Is the number of files we keep
+-   `maxBytes`: Is the maximum file size, after which rotation takes place
+-   `format`: Controls which LogFormatter is being used. By default the
+    ColorFormatter is used and thus the options `color`, `splitLines` and
+    `pretty` are also supported. Other values include: `default` and `json`
+    which we will see later on
+
+The above settings produce the following output in the file:
+
+```
+08-05-2018 15:57:24.118 16142:140509479982912 DEBUG            logfile 23  : ^---same as console, this is an example log line
+08-05-2018 15:57:24.118 16142:140509479982912 INFO             logfile 24  : This logger handles
+08-05-2018 15:57:24.118 16142:140509479982912 INFO             logfile 24  : New
+08-05-2018 15:57:24.118 16142:140509479982912 INFO             logfile 24  : Lines
+08-05-2018 15:57:24.119 16142:140509479982912 WARNING          logfile 25  : {'but': 'Flattens structs by default'}
+08-05-2018 15:57:24.119 16142:140509479982912 ERROR            logfile 26  : Errors DONT stick out - color is not used
+```
+
+with `splitLines: False` you get:
+
+```
+logging.info("Like console\nYou can avoid\nsplitting lines"
+
+08-05-2018 15:57:24.119 16142:140509479982912 INFO             logfile 42  : Like console\nYou can avoid\nsplitting lines
+```
+
+while with `pretty: True` you get:
+
+```
+logging.info({"or": "enable prettifing!"})
+
+08-05-2018 15:57:24.120 16142:140509479982912 INFO             logfile 55  : (dict) {
+08-05-2018 15:57:24.120 16142:140509479982912 INFO             logfile 55  :    'or': 'enable prettifing!'
+08-05-2018 15:57:24.120 16142:140509479982912 INFO             logfile 55  : }
+```
+
+#### Format: default
+
+I would really not suggest this... but you get
+
+```
+logging.info("You\n can set the \n format to\n default")
+logging.warning("But I don't like it...")
+
+08-05-2018 15:57:24.120 16142:140509479982912 INFO             logfile 70  : You
+ can set the
+ format to
+ default
+08-05-2018 15:57:24.120 16142:140509479982912 WARNING          logfile 71  : But I don't like it...
+```
 
 ## Developing
 

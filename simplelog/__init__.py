@@ -66,11 +66,12 @@ class Logger(logging.getLoggerClass()):
                 'filename': Filename (under LOGDIR)
                 'level': Logging level for this file
                 'format': [ 'json' | 'console' | 'default' ] # TODO: CSV
-                'splitLines': Split new lines in when logging
                 'backupCount': Number of files to keep
                 'maxBytes': Maximum file size
             }
 
+        If format is set to "console", then ColorFormatter options are also
+        supported.
         '''
 
         root = logging.getLogger()
