@@ -1,5 +1,6 @@
 import os
 import sys
+import json
 import logging
 import unittest
 import tempfile
@@ -242,3 +243,25 @@ class TestSimpleLog(unittest.TestCase):
             cont = f.read()
 
         self.assertEqual(1, len(cont.splitlines()), msg="Got: %s" % cont)
+
+    def test_012_file_json(self):
+        """
+        Remove log and test default formatting
+        """
+        rmlog()
+        fileSpecs = [{"filename": LOGFILE, "level":logging.DEBUG, "format": "json"}]
+        termSpecs = {"color": True, "splitLines": True, "level": logging.WARNING }
+        Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=fileSpecs)
+
+        logging.debug("Hello\nWorld", extra={"when": "today"})
+
+        with open(LOGPATH) as f:
+            cont = json.loads(f.read())
+
+        self.assertEqual(True, "message" in cont, msg="Got: %s" % str(cont))
+        self.assertEqual("Hello\nWorld", cont["message"], msg="Got: %s" % str(cont))
+
+        self.assertEqual(True, "when" in cont, msg="Got: %s" % str(cont))
+        self.assertEqual("today", cont["when"], msg="Got: %s" % str(cont))
+
+        self.assertEqual(True, "timestamp" in cont, msg="Got: %s" % str(cont))
