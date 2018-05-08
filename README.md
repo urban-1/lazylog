@@ -21,6 +21,8 @@ Yet another python logger that aims to:
 
 [You can find all the sources of this section in `examples` folder]
 
+### Basics
+
 In the simplest form, you can initialize `simplelog` with:
 
     # Import the Logger class
@@ -57,9 +59,37 @@ The output should look like:
 
 ![console with default settings](https://gitlab.com/urban-1/simplelog/raw/master/examples/images/console-defaults.png "Default console settings")
 
+### Customizing
 
+You can customize `simplelog` and disable any of the features you don't like, so
 
+```
+# Init
+termSpecs = {"level": logging.DEBUG, "splitLines": False, "pretty": False }
+Logger.init(LOGDIR, termSpecs=termSpecs)
 
+# Use ...
+logging.debug("You can remove all the fancy stuff:")
+logging.info("... keeping\n each message\n in its own line")
+logging.warning({"and": "flatten structures", "like": list("lists")})
+```
+
+gives you:
+
+![console color only settings](https://gitlab.com/urban-1/simplelog/raw/master/examples/images/console-color-only.png "Console colour only")
+
+... while initializing with:
+
+    termSpecs = {"level": logging.DEBUG, "splitLines": True, "pretty": False }
+
+gives you:
+
+![Console no prettifying structs settings](https://gitlab.com/urban-1/simplelog/raw/master/examples/images/console-no-pretty.png "Console no prettifying structs")
+
+Of course you can disable everything, falling back to the default `logging`
+behaviour with the only difference being the log format:
+
+![Console boring settings](https://gitlab.com/urban-1/simplelog/raw/master/examples/images/console-boring.png "Boring...")
 
 ## Developing
 

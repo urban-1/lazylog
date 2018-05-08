@@ -24,3 +24,8 @@ termSpecs = {"level": logging.DEBUG, "splitLines": True, "pretty": False }
 Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=None)
 logging.error("However,\nYou can choose to split\nlines")
 logging.critical(["but", "not", "prettify\nstructs"])
+
+logging.info("RECONFIGURING....")
+termSpecs = {"level": logging.DEBUG, "splitLines": False, "pretty": False, "color": False }
+Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=None)
+logging.info("Boooriiiing")
