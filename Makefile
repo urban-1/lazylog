@@ -8,9 +8,9 @@ PROJ_VERSION := $(shell git describe --always)
 BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 
 
-.PHONY: all coverage docs autopep tests install_doc help
+.PHONY: all coverage docs autopep tests help
 
-all: autopep coverage reqs doc
+all: autopep coverage docs
 
 
 help:
@@ -24,16 +24,9 @@ help:
 	@echo "  coverage     to run converage against the tests"
 	@echo "  help         to print this message..."
 	@echo
-	# @echo "Docker related:"
-	# @echo
-	# @echo "  docker_clean to remove all previous images"
-	# @echo "  docker_build to build the docker container"
-	# @echo "  docker_tag   to tag the containers with the correct repository(ies)"
-	# @echo "  docker_push  to update/push all tags"
-	# @echo "  docker       to do all the above"
-	# @echo
 
 docs:
+	pandoc --from=markdown --to=rst --output=${CURDIR}/docs/source/README.rst README.md
 	@(cd "$(CURDIR)/docs" && sphinx-apidoc -o ./source "$(CURDIR)/$(IMAGE_NAME)" -f && make html)
 
 autopep:

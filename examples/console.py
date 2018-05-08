@@ -12,8 +12,7 @@ sys.path.append(ROOTDIR)
 from simplelog import Logger
 
 # Console only logger
-termSpecs = {"level": logging.DEBUG }
-Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=None)
+Logger.init()
 
 logging.debug("This is an example log line")
 logging.info("This logger handles\nNew\nLines")

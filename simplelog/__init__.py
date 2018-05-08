@@ -41,7 +41,7 @@ class Logger(logging.getLoggerClass()):
     '''Date output format'''
 
     LOGFORMAT = '%(asctime)s.%(msecs)03d %(process)s:%(thread)u %(levelname)-8s %(module)15.15s %(lineno)-4s: %(message)s'
-    '''Default log format for all handlers. This can change via ``Logger.LOGFORMAT = ...`` before calling ``init()``'''
+    '''Default log format for all handlers. This can change in :py:meth:`init`'''
 
 
     @classmethod
@@ -60,16 +60,17 @@ class Logger(logging.getLoggerClass()):
     @classmethod
     def addFileLogger(cls, specs):
         '''
-        Add a file logger with the given specs. Specs:
+        Add a file logger with the given specs. Specs::
 
-        {
-            'filename': Filename (under LOGDIR)
-            'level': Logging level for this file
-            'format': [ 'json' | 'console' | 'default' ] # TODO: CSV
-            'splitLines': Split new lines in when logging
-            'backupCount': Number of files to keep
-            'maxBytes': Maximum file size
-        }
+            {
+                'filename': Filename (under LOGDIR)
+                'level': Logging level for this file
+                'format': [ 'json' | 'console' | 'default' ] # TODO: CSV
+                'splitLines': Split new lines in when logging
+                'backupCount': Number of files to keep
+                'maxBytes': Maximum file size
+            }
+
         '''
 
         root = logging.getLogger()
@@ -276,7 +277,27 @@ class ColorFormatter(logging.Formatter):
     }
     '''File default settings'''
 
-    def __init__(self, fmt, datefmt=None, color=True, splitLines=True, pretty=False):
+
+
+    STYLES = {
+        'DEBUG': NORM,
+        'INFO': NORM,
+        'WARNING': NORM,
+        'CRITICAL': BOLD,
+        'ERROR': BOLD
+    }
+    """Each log-level's default character style"""
+
+    COLORS = {
+        'DEBUG': WHITE,
+        'INFO': CYAN,
+        'WARNING': YELLOW,
+        'CRITICAL': YELLOW,
+        'ERROR': RED
+    }
+    """Default color values for each log-level"""
+
+    def __init__(self, fmt, datefmt=None, color=True, splitLines=True, pretty=False, colors=None, styles=None):
         '''
         Init given the log line format, color and date format
         '''
@@ -285,21 +306,9 @@ class ColorFormatter(logging.Formatter):
         self.splitLines = splitLines
         self.pretty = pretty
 
-        ColorFormatter.COLORS = {
-            'DEBUG': ColorFormatter.WHITE,
-            'INFO': ColorFormatter.CYAN,
-            'WARNING': ColorFormatter.YELLOW,
-            'CRITICAL': ColorFormatter.YELLOW,
-            'ERROR': ColorFormatter.RED
-        }
+        self.colors = colors if colors is not None else ColorFormatter.COLORS
+        self.styles = styles if styles is not None else ColorFormatter.STYLES
 
-        ColorFormatter.STYLES = {
-            'DEBUG': ColorFormatter.NORM,
-            'INFO': ColorFormatter.NORM,
-            'WARNING': ColorFormatter.NORM,
-            'CRITICAL': ColorFormatter.BOLD,
-            'ERROR': ColorFormatter.BOLD
-        }
 
     def format(self, record):
         '''
@@ -334,11 +343,11 @@ class ColorFormatter(logging.Formatter):
 
         # The background is set with 40 plus the number of the color,
         # and the foreground with 30
-        if self.color and levelname in ColorFormatter.COLORS:
+        if self.color and levelname in self.colors:
             msg = '%s%d;%dm%s%s' % (
                 ColorFormatter.ESC,
-                ColorFormatter.STYLES[levelname],
-                30 + ColorFormatter.COLORS[levelname],
+                self.styles[levelname],
+                30 + self.colors[levelname],
                 msg,
                 ColorFormatter.RESET_SEQ)
             return msg
@@ -370,7 +379,7 @@ class JSONFormatter(logging.Formatter):
 
         https://github.com/madzak/python-json-logger/blob/master/src/pythonjsonlogger/jsonlogger.py
 
-        
+
     '''
 
     # http://docs.python.org/library/logging.html#logrecord-attributes
@@ -434,9 +443,9 @@ class JSONFormatter(logging.Formatter):
 #
 def pretty_recursive(value, htchar='\t', lfchar='\n', indent=0):
     '''
-    Pretty printing, full creadit to:
+    Recursive pretty printing of dict, list and tuples - full creadit to:
 
-        http://stackoverflow.com/questions/3229419/pretty-printing-nested-dictionaries-in-python
+    http://stackoverflow.com/questions/3229419/pretty-printing-nested-dictionaries-in-python
 
     '''
     nlch = lfchar + htchar * (indent + 1)
@@ -495,7 +504,7 @@ def mkdir_p(path):
 
 def merge_dicts(source, destination):
     '''
-    run me with nosetests --with-doctest file.py - https://stackoverflow.com/a/20666342/3727050
+    Full credit to: https://stackoverflow.com/a/20666342/3727050
 
     >>> a = { 'first' : { 'all_rows' : { 'pass' : 'dog', 'number' : '1' } } }
     >>> b = { 'first' : { 'all_rows' : { 'fail' : 'cat', 'number' : '5' } } }

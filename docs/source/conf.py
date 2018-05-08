@@ -16,7 +16,7 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
-from subprocess import call, PIPE
+from subprocess import check_output, PIPE
 import sys
 import os
 
@@ -33,13 +33,14 @@ project = 'simplelog'
 copyright = '2018, Andreas Bontozoglou'
 author = 'Andreas Bontozoglou'
 
-out = call(["git", "describe", "--always"], stdout=PIPE)
-print(out)
+# Get the version
+out = check_output(["git", "describe", "--always"]).strip().decode("ascii")
+
 
 # The short X.Y version
-version = ''
+version = out
 # The full version, including alpha/beta/rc tags
-release = ''
+release = out
 
 
 # -- General configuration ---------------------------------------------------
@@ -54,6 +55,7 @@ release = ''
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.viewcode',
+    'sphinx.ext.coverage',
     'sphinx.ext.githubpages',
 ]
 
