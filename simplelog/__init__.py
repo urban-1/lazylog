@@ -366,7 +366,11 @@ class JSONFormatter(logging.Formatter):
     '''
     Format messages as JSON
 
-    https://github.com/madzak/python-json-logger/blob/master/src/pythonjsonlogger/jsonlogger.py
+    Lots of ideas from:
+
+        https://github.com/madzak/python-json-logger/blob/master/src/pythonjsonlogger/jsonlogger.py
+
+        
     '''
 
     # http://docs.python.org/library/logging.html#logrecord-attributes

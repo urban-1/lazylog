@@ -27,7 +27,7 @@ Create a Virtual Environment and install coverage
 
     python3 -m venv venv
     . venv/bin/activate
-    pip install coverage
+    pip install coverage pipreqs Sphinx
 
 ### Coverage
 
