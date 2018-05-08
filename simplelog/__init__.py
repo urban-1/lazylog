@@ -8,10 +8,10 @@ import logging.handlers
 
 try:
     from StringIO import StringIO
-    str_types = basestring
+    str_types = basestring,
 except:
     from io import StringIO
-    str_types = str
+    str_types = str,
 
 
 class Logger(logging.getLoggerClass()):
@@ -410,7 +410,7 @@ class JSONFormatter(logging.Formatter):
             result = merge_dicts(record.msg, result)
         # Serialize as object
         else:
-            result["object"] =json.dumps(record.msg)
+            result["object"] = record.msg
 
         # Now merge any extra
         for k, v in record.__dict__.items():

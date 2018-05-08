@@ -265,3 +265,39 @@ class TestSimpleLog(unittest.TestCase):
         self.assertEqual("today", cont["when"], msg="Got: %s" % str(cont))
 
         self.assertEqual(True, "timestamp" in cont, msg="Got: %s" % str(cont))
+
+
+    def test_013_file_json_dict(self):
+        """
+        Remove log and test default formatting
+        """
+        rmlog()
+        fileSpecs = [{"filename": LOGFILE, "level":logging.DEBUG, "format": "json"}]
+        termSpecs = {"color": True, "splitLines": True, "level": logging.WARNING }
+        Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=fileSpecs)
+
+        logging.debug({"hello": "world"}, extra={"when": "today"})
+
+        with open(LOGPATH) as f:
+            cont = json.loads(f.read())
+
+        self.assertEqual(True, "hello" in cont, msg="Got: %s" % str(cont))
+        self.assertEqual("world", cont["hello"], msg="Got: %s" % str(cont))
+
+
+    def test_014_file_json_object(self):
+        """
+        Remove log and test default formatting
+        """
+        rmlog()
+        fileSpecs = [{"filename": LOGFILE, "level":logging.DEBUG, "format": "json"}]
+        termSpecs = {"color": True, "splitLines": True, "level": logging.WARNING }
+        Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=fileSpecs)
+
+        logging.debug(["hello", "world"], extra={"when": "today"})
+
+        with open(LOGPATH) as f:
+            cont = json.loads(f.read())
+
+        self.assertEqual(True, "object" in cont, msg="Got: %s" % str(cont))
+        self.assertEqual(["hello", "world"], cont["object"], msg="Got: %s" % str(cont))
