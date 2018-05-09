@@ -1,13 +1,16 @@
 from distutils.core import setup
+from subprocess import check_output, PIPE
 
 # Get the version
-vesrion = check_output(["git", "describe", "--always"]).strip().decode("ascii")
+version = check_output(["git", "describe", "--always"]).strip().decode("ascii")
+version = '-'.join(version.split('-')[:2])
 
 setup(
   name = 'simplelog',
   packages = ['simplelog'],
   version = version,
   description = 'Yet another python logger that implifies json file logging and prettifies console output',
+  long_description=open("README.md").read(),
   author = 'Andreas Bontozoglou',
   author_email = 'bodozoglou@gmail.com',
   url = 'https://github.com/urban-1/simplelog',

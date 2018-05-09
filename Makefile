@@ -8,7 +8,7 @@ PROJ_VERSION := $(shell git describe --always)
 BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 
 
-.PHONY: all coverage docs autopep tests help
+.PHONY: all coverage docs autopep tests help dist
 
 all: autopep coverage docs
 
@@ -45,6 +45,16 @@ coverage:
 
 tests:
 	"$(CURDIR)/test.py"
+
+dist:
+	@rm -r ./dist
+	python setup.py sdist
+	twine upload dist/*
+
+test_dist:
+	@rm -r ./dist
+	python setup.py sdist
+	twine upload -r pypitest dist/*
 
 
 # docker: docker_build docker_tag docker_push

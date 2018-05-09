@@ -5,3 +5,4 @@ venv/
 .coverage
 coverage/
 docs/build/
+dist/
