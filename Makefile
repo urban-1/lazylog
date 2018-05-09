@@ -46,7 +46,7 @@ coverage:
 tests:
 	"$(CURDIR)/test.py"
 
-dist:
+dist: test_dist
 	@rm -r ./dist
 	python setup.py sdist
 	twine upload dist/*
