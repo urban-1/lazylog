@@ -1,6 +1,8 @@
 SimpleLog
 =========
 
+|Build Status|
+
 Yet another python logger that aims to:
 
 -  Simplify logging setup - down to config and a single line
@@ -21,7 +23,11 @@ Yet another python logger that aims to:
 Usage
 -----
 
-[You can find all the sources of this section in ``examples`` folder]
+**NOTE:** For pretty colors on this README please visit the `readthedocs
+version <http://simplelog.readthedocs.io/en/latest/>`__
+
+**NOTE2:** You can find all the sources of this section in ``examples``
+folder
 
 Basics
 ~~~~~~
@@ -340,7 +346,7 @@ Create a Virtual Environment and install dev-tools
 
     python3 -m venv venv
     . venv/bin/activate
-    pip install coverage pipreqs Sphinx autopep8
+    pip install --upgrade coverage pipreqs Sphinx autopep8 twine wheel pip
 
 The project is controlled from the ``Makefile``:
 
@@ -394,3 +400,5 @@ ones that will not read the source):
 -  Prettifying structures::
    http://stackoverflow.com/questions/3229419/pretty-printing-nested-dictionaries-in-python
 
+.. |Build Status| image:: https://travis-ci.com/urban-1/simplelog.svg?branch=master
+   :target: https://travis-ci.com/urban-1/simplelog

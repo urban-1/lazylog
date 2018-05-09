@@ -3,6 +3,5 @@ __pycache__/
 *~
 venv/
 .coverage
-coverage/
 docs/build/
 dist/

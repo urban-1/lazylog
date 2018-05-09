@@ -1,5 +1,9 @@
 # SimpleLog
 
+[![Build Status](https://travis-ci.com/urban-1/simplelog.svg?branch=master)](https://travis-ci.com/urban-1/simplelog)
+[![Documentation Status](https://readthedocs.org/projects/simplelog/badge/?version=latest)](http://simplelog.readthedocs.io/en/latest/?badge=latest)
+
+
 Yet another python logger that aims to:
 
 -   Simplify logging setup - down to config and a single line
@@ -19,7 +23,10 @@ Yet another python logger that aims to:
 
 ## Usage
 
-[You can find all the sources of this section in `examples` folder]
+**NOTE:** For pretty colors on this README please visit the
+[readthedocs version](http://simplelog.readthedocs.io/en/latest/)
+
+**NOTE2:** You can find all the sources of this section in `examples` folder
 
 ### Basics
 
