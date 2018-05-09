@@ -330,7 +330,7 @@ help         to print this message...
 To generate documentation you will need `pandoc` installed locally on your dev
 box. The target `all` will run `autopep coverage docs` targets in order.
 
-Coverage will be build and can be found in [docs/build/html/_static/coverage/](http://_static/coverage/index.html)
+Coverage will be build and can be found in [docs/build/html/_static/coverage/](_static/coverage/index.html)
 
 ### TODOs
 
