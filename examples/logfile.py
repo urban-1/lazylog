@@ -35,7 +35,7 @@ with open(LOGPATH) as f:
 os.unlink(LOGPATH)
 
 #
-# 2. Customizing
+# 2. Customizing: Not splitting new lines
 #
 print("\n2. Reconfiguring...\n")
 fileSpecs = [{"filename": LOGFILE, "level":logging.DEBUG, "splitLines":False}]
@@ -49,7 +49,9 @@ with open(LOGPATH) as f:
 
 os.unlink(LOGPATH)
 
-
+#
+# 3. Customizing: Not prettyfying
+#
 print("\n3. Reconfiguring...\n")
 fileSpecs = [{"filename": LOGFILE, "level":logging.DEBUG, "pretty":True}]
 Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=fileSpecs)
@@ -122,7 +124,7 @@ with open(LOGPATH2) as f:
 os.unlink(LOGPATH2)
 
 #
-# 2 files from init!
+# 7. Both files from init!
 #
 print("\n7. Reconfiguring...\n")
 fileSpecs = [
