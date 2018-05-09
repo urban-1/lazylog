@@ -7,7 +7,9 @@ import logging
 # Set the paths
 LOGDIR = tempfile.gettempdir()
 LOGFILE = "simple-log-examples.log"
+LOGFILE2 = "simple-log-examples-2.log"
 LOGPATH = "%s/%s" % (LOGDIR, LOGFILE)
+LOGPATH2 = "%s/%s" % (LOGDIR, LOGFILE2)
 ROOTDIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(ROOTDIR)
 
@@ -94,3 +96,52 @@ with open(LOGPATH) as f:
     print(f.read())
 
 os.unlink(LOGPATH)
+
+#
+# 6. Lets add another log-file
+#
+print("\n6. Reconfiguring...\n")
+fileSpecs = [{"filename": LOGFILE, "level":logging.DEBUG, "format":"json"}]
+Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=fileSpecs)
+
+fileSpecs2 = {"filename": LOGFILE2, "level":logging.INFO}
+Logger.addFileLogger(fileSpecs2)
+
+logging.info("2 Files!")
+
+print("\n\nFile Contents 1:\n")
+with open(LOGPATH) as f:
+    print(f.read())
+
+os.unlink(LOGPATH)
+
+print("\n\nFile Contents 2:\n")
+with open(LOGPATH2) as f:
+    print(f.read())
+
+os.unlink(LOGPATH2)
+
+#
+# 2 files from init!
+#
+print("\n7. Reconfiguring...\n")
+fileSpecs = [
+    {"filename": LOGFILE, "level":logging.DEBUG, "format":"json"},
+    {"filename": LOGFILE2, "level":logging.INFO}
+]
+Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=fileSpecs)
+
+logging.info("2 Files!")
+logging.debug("JSON only...")
+
+print("\n\nFile Contents 1:\n")
+with open(LOGPATH) as f:
+    print(f.read())
+
+os.unlink(LOGPATH)
+
+print("\n\nFile Contents 2:\n")
+with open(LOGPATH2) as f:
+    print(f.read())
+
+os.unlink(LOGPATH2)

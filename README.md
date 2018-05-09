@@ -49,11 +49,13 @@ This creates a console-only logger with all the values set to their defaults:
 
 Once initialized you can use the `logging` module as usual - nothing special:
 
-    logging.debug("This is an example log line")
-    logging.info("This logger handles\nNew\nLines")
-    logging.warning({"also": "handles basic structures", "like": list("lists"), "and": ("colors", "!")})
-    logging.error("Errors stick out")
-    logging.critical("but critical sticks out more...")
+```python
+logging.debug("This is an example log line")
+logging.info("This logger handles\nNew\nLines")
+logging.warning({"also": "handles basic structures", "like": list("lists"), "and": ("colors", "!")})
+logging.error("Errors stick out")
+logging.critical("but critical sticks out more...")
+```
 
 The output should look like:
 
@@ -85,7 +87,7 @@ The output should look like:
 
 You can customize `simplelog` and disable any of the features you don't like, so
 
-```
+```python
 # Init
 termSpecs = {"level": logging.DEBUG, "splitLines": False, "pretty": False }
 Logger.init(LOGDIR, termSpecs=termSpecs)
@@ -105,7 +107,9 @@ gives you:
 
 ... while initializing with:
 
-    termSpecs = {"level": logging.DEBUG, "splitLines": True, "pretty": False }
+```python
+termSpecs = {"level": logging.DEBUG, "splitLines": True, "pretty": False }
+```
 
 gives you:
 
@@ -124,7 +128,7 @@ behaviour with the only difference being the log format:
 Finally, in the `init()` function you can override the default format and date
 format by passing `fmt` and `datefmt` parameters. The defaults are:
 
-```
+```python
 DATEFORMAT = '%d-%m-%Y %H:%M:%S'
 LOGFORMAT = '%(asctime)s.%(msecs)03d %(process)s:%(thread)u %(levelname)-8s %(module)15.15s %(lineno)-4s: %(message)s'
 ```
@@ -143,14 +147,16 @@ allows you to use this feature hassle-free. To define a file logger do:
 
 The above creates a file in `LOGDIR/LOGFILE` with the default settings which are:
 
+```python
     {
         'format': 'console'
         'backupCount': 20
-        'maxBytes': 10MB
+        'maxBytes': 10000000 # 10MB
         'color': False,
         'splitLines': True,
         'pretty': False
     }
+```
 
 -   `backupCount`: Is the number of files we keep
 -   `maxBytes`: Is the maximum file size, after which rotation takes place
@@ -161,7 +167,7 @@ The above creates a file in `LOGDIR/LOGFILE` with the default settings which are
 
 The above settings produce the following output in the file:
 
-```
+```text
 08-05-2018 15:57:24.118 16142:140509479982912 DEBUG            logfile 23  : ^---same as console, this is an example log line
 08-05-2018 15:57:24.118 16142:140509479982912 INFO             logfile 24  : This logger handles
 08-05-2018 15:57:24.118 16142:140509479982912 INFO             logfile 24  : New
@@ -172,7 +178,7 @@ The above settings produce the following output in the file:
 
 with `splitLines: False` you get:
 
-```
+```text
 # Code:
 # logging.info("Like console\nYou can avoid\nsplitting lines")
 
@@ -182,7 +188,7 @@ with `splitLines: False` you get:
 
 while with `pretty: True` you get:
 
-```
+```text
 # Code:
 # logging.info({"or": "enable prettifying!"})
 
@@ -198,13 +204,13 @@ stream them and generally for machine-to-machine communication. At the moment,
 `simplelog` does not support JSON logging on the terminal but does support it
 for files. To enable it, initialize with:
 
-```
+```python
 fileSpecs = [{"filename": LOGFILE, "level":logging.DEBUG, "format":"json"}]
 ```
 
 The following ways of logging are supported:
 
-```
+```python
 logging.info("Simple str message")
 logging.warning("Message with metadata", extra={"user": "nwj12"})
 logging.debug({"what": "dict-based logging"}, extra={"user": "asd32"})
@@ -213,7 +219,7 @@ logging.info(["anything", "json", "serializable", "see OBJECT"], extra={"foo":"b
 
 and the results will be (each one in a single line in the logfile):
 
-```
+```json
 {
     "filename": "logfile.py",
     "module": "logfile",
@@ -267,12 +273,28 @@ and the results will be (each one in a single line in the logfile):
 
 ```
 
+Finally, one can have multiple log files with different formats and log levels.
+This can be done either on initialization state, or later on with `addFileLogger`
+method:
+
+```python
+# On init:
+fileSpecs = [
+    {"filename": LOGFILE, "level":logging.DEBUG, "format":"json"},
+    {"filename": LOGFILE2, "level":logging.INFO}
+]
+Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=fileSpecs)
+
+# Later-on:
+fileSpecs2 = {"filename": LOGFILE2, "level":logging.INFO}
+Logger.addFileLogger(fileSpecs2)
+```
 
 #### Default format
 
 I would really not suggest this... but you get
 
-```
+```text
 # Code:
 # logging.info("You\n can set the \n format to\n default")
 # logging.warning("But I don't like it...")
@@ -294,16 +316,31 @@ Create a Virtual Environment and install dev-tools
 
 The project is controlled from the `Makefile`:
 
-```
+```text
 Please use `make <target>' where <target> is one of
 
 docs         to make standalone HTML files (in docs/build)
 reqs         to generate the pip requirements file in etc/
 autopep      to fix coding style in the project
 tests        to run project's tests (actually parsers)
-coverage     to run converage against the tests
+coverage     to run coverage against the tests
 help         to print this message...
 ```
 
 To generate documentation you will need `pandoc` installed locally on your dev
 box. The target `all` will run `autopep coverage docs` targets in order.
+
+### TODOs
+
+Below is a list of features/ideas that have not been implemented either to keep
+things simple, or because they were not needed by any of my projects. Feel free
+to pick-em up or ask for them if you think are necessary.
+
+- [ ] Maybe implement the `format` for termSpecs to allow JSON logging on the
+  console.
+- [ ] Log and date formats are currently class members of logging, modify to allow
+  different handlers to have different formats
+- [ ] Add support for Exception logging. At the moment this can be done "manually"
+  with `traceback` module and `format_exc()`
+- [ ] Same as formats, `LOGDIR` is considered to be one and is a static property.
+  Change this to allow log-files in multiple locations

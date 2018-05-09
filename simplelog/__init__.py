@@ -203,6 +203,9 @@ class Logger(logging.getLoggerClass()):
 
     @staticmethod
     def setConsoleLevel(level):
+        """
+        In this logger, by convention, handler 0 is always the console halder.
+        """
         logging.getLogger().handlers[0].setLevel(level)
 
     @staticmethod

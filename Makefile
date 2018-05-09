@@ -21,7 +21,7 @@ help:
 	@echo "  reqs         to generate the pip requirements file in etc/"
 	@echo "  autopep      to fix coding style in the project"
 	@echo "  tests        to run project's tests (actually parsers)"
-	@echo "  coverage     to run converage against the tests"
+	@echo "  coverage     to run coverage against the tests"
 	@echo "  help         to print this message..."
 	@echo
 
