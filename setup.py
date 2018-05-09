@@ -4,7 +4,8 @@ from subprocess import check_output, PIPE
 
 # Get the version
 version = check_output(["git", "describe", "--always"]).strip().decode("ascii")
-version = '-'.join(version.split('-')[:2])
+version = '.'.join(version.split('-')[:2])
+print(version)
 
 setup(
   name = 'simplelog',

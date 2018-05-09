@@ -35,7 +35,7 @@ author = 'Andreas Bontozoglou'
 
 # Get the version
 out = check_output(["git", "describe", "--always"]).strip().decode("ascii")
-
+out = '.'.join(out.split('-')[:2])
 
 # The short X.Y version
 version = out

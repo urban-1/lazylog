@@ -47,16 +47,17 @@ tests:
 	chmod +x "$(CURDIR)/test.py"
 	"$(CURDIR)/test.py"
 
-dist: test_dist
-	-@rm -r ./dist
+dist:  test_dist
+	-@rm -r ./dist ./*.egg-info ./build
 	python setup.py sdist
 	twine upload dist/*
 
-test_dist:
-	-@rm -r ./dist
+test_dist: distclean
 	python setup.py bdist_wheel
 	twine upload -r pypitest dist/*
 
+distclean:
+	-@rm -r ./dist ./*.egg-info ./build
 
 # docker: docker_build docker_tag docker_push
 #
