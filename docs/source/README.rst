@@ -359,6 +359,9 @@ To generate documentation you will need ``pandoc`` installed locally on
 your dev box. The target ``all`` will run ``autopep coverage docs``
 targets in order.
 
+Coverage will be build and can be found in
+`docs/build/html/\_static/coverage/ <_static/coverage/index.html>`__
+
 TODOs
 ~~~~~
 
@@ -375,4 +378,19 @@ necessary.
    "manually" with ``traceback`` module and ``format_exc()``
 -  [ ] Same as formats, ``LOGDIR`` is considered to be one and is a
    static property. Change this to allow log-files in multiple locations
+
+Acknowledgements
+----------------
+
+This project has been put together by bits and pieces of code over
+fairly long time (and "as required"). I have rewritten lots of parts,
+cleaned up and packaged it in a reusable form. However, lots of other
+people's code is included and as you will see in the comments in the
+source, credit is given when applicable. Just to mention some (for the
+ones that will not read the source):
+
+-  Merging dicts: https://stackoverflow.com/a/20666342/3727050
+-  JSON file logging: https://github.com/madzak/python-json-logger
+-  Prettifying structures::
+   http://stackoverflow.com/questions/3229419/pretty-printing-nested-dictionaries-in-python
 

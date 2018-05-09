@@ -76,8 +76,7 @@ class Logger(logging.getLoggerClass()):
         root = logging.getLogger()
 
         if 'filename' not in specs:
-            logging.error('"filename" missing from file specs... skipping!')
-            return
+            raise RuntimeError('"filename" missing from file specs... skipping!')
 
         if 'level' not in specs:
             specs['level'] = logging.INFO
@@ -91,7 +90,7 @@ class Logger(logging.getLoggerClass()):
             fhandle.close()
         except BaseException:
             logging.error('NOT Initializing File Logging: File-system permissions error: \n\t%s' % filePath)
-            # No point doing anything else!
+            # No point doing anything else! BUT do not raise exception
             return
 
         # If we just created it, set correct permissions so that is group accessible
@@ -111,12 +110,15 @@ class Logger(logging.getLoggerClass()):
             backupCount=specs['backupCount'] if 'backupCount' in specs else cls.BACKUPCOUNT,
             maxBytes=specs['maxBytes'] if 'maxBytes' in specs else cls.MAXBYTES)
 
-        formatter = logging.Formatter(cls.LOGFORMAT, datefmt=cls.DATEFORMAT)
+        fmt = specs["fmt"] if "fmt" in specs else cls.USER_LOGFORMAT
+        datefmt = specs["datefmt"] if "datefmt" in specs else cls.USER_DATEFORMAT
+
+        formatter = logging.Formatter(fmt, datefmt=datefmt)
         if 'format' not in specs or specs['format'] == 'console':
             specs = ColorFormatter.parseSpecs(specs, ColorFormatter.FILEDEFAULTS)
             formatter = ColorFormatter(
-                cls.LOGFORMAT,
-                datefmt=cls.DATEFORMAT,
+                fmt,
+                datefmt=datefmt,
                 color=False,
                 pretty=specs['pretty'],
                 splitLines=specs['splitLines'])
@@ -128,7 +130,7 @@ class Logger(logging.getLoggerClass()):
             if 'fields' not in specs:
                 specs['fields'] = JSONFormatter.FIELDS
 
-            formatter = JSONFormatter(specs['fields'], datefmt=cls.DATEFORMAT)
+            formatter = JSONFormatter(specs['fields'])
 
         rotFileH.setFormatter(formatter)
         rotFileH.setLevel(specs['level'])
@@ -157,10 +159,16 @@ class Logger(logging.getLoggerClass()):
 
         cls.LOGDIR = folder
 
-        if fmt is not None:
-            cls.LOGFORMAT = fmt
-        if datefmt is not None:
-            cls.DATEFORMAT = datefmt
+        if fmt is None:
+            fmt = cls.LOGFORMAT
+
+        if datefmt is None:
+            datefmt = cls.DATEFORMAT
+
+        # Store those statically as the last user supplied format. This will be
+        # used from now on if format is not specified
+        cls.USER_LOGFORMAT = fmt
+        cls.USER_DATEFORMAT = datefmt
 
         # Check folder and create if needed
         cls._chkdir()
@@ -177,8 +185,8 @@ class Logger(logging.getLoggerClass()):
         console = logging.StreamHandler()
         console.setLevel(termSpecs['level'])
         formatter = ColorFormatter(
-            cls.LOGFORMAT,
-            datefmt=cls.DATEFORMAT,
+            fmt,
+            datefmt=datefmt,
             color=termSpecs['color'],
             splitLines=termSpecs['splitLines'],
             pretty=termSpecs['pretty'])

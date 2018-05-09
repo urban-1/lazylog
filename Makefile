@@ -30,7 +30,7 @@ docs:
 	@(cd "$(CURDIR)/docs" && sphinx-apidoc -o ./source "$(CURDIR)/$(IMAGE_NAME)" -f && make html)
 
 autopep:
-	autopep8  --max-line-length 120 -r -i -j 2 "$(CURDIR)/${IMAGE_NAME}" -v -aaa
+	autopep8  --max-line-length 120 -r -i -j 2 "$(CURDIR)/${IMAGE_NAME}" "$(CURDIR)/tests" -v -aaa
 
 reqs:
 	-@python3 -m pipreqs.pipreqs --savepath "$(CURDIR)/requirements.txt" "$(CURDIR)"

@@ -5,17 +5,20 @@ import logging
 import unittest
 import tempfile
 import traceback
+import datetime
 from simplelog import Logger
 
 LOGDIR = tempfile.gettempdir()
 LOGFILE = "tmp-simple.log"
 LOGPATH = "%s/%s" % (LOGDIR, LOGFILE)
 
+
 def rmlog():
     try:
         os.unlink(LOGPATH)
-    except:
+    except BaseException:
         pass
+
 
 class TestSimpleLog(unittest.TestCase):
     """
@@ -24,9 +27,8 @@ class TestSimpleLog(unittest.TestCase):
 
     @classmethod
     def setUp(cls):
-        termSpecs = {"color": True, "splitLines": True, "level": logging.DEBUG }
+        termSpecs = {"color": True, "splitLines": True, "level": logging.DEBUG}
         Logger.init(LOGDIR, termSpecs=termSpecs)
-
 
     @classmethod
     def tearDown(cls):
@@ -65,7 +67,6 @@ class TestSimpleLog(unittest.TestCase):
         self.assertEqual(4, len(strio.getvalue().splitlines()))
         strio.close()
 
-
         strio = logging.getLoggerClass().mockHandler(0)
         logging.debug(["hello", "world"])
         logging.getLoggerClass().restoreHandler(0)
@@ -82,15 +83,13 @@ class TestSimpleLog(unittest.TestCase):
         self.assertEqual(4, len(strio.getvalue().splitlines()))
         strio.close()
 
-
     def test_003_pretty_false_split_true(self):
         """
         Get a new logger and ...
         """
         # Reset Logger
-        termSpecs = {"color": True, "splitLines": True, "level": logging.DEBUG, "pretty": False }
+        termSpecs = {"color": True, "splitLines": True, "level": logging.DEBUG, "pretty": False}
         Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=None)
-
 
         strio = logging.getLoggerClass().mockHandler(0)
         logging.debug({"hello": 1, "world": 2})
@@ -104,9 +103,8 @@ class TestSimpleLog(unittest.TestCase):
         Get a new logger and ...
         """
         # Reset Logger
-        termSpecs = {"color": True, "splitLines": True, "level": logging.DEBUG, "pretty": False }
+        termSpecs = {"color": True, "splitLines": True, "level": logging.DEBUG, "pretty": False}
         Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=None)
-
 
         strio = logging.getLoggerClass().mockHandler(0)
         logging.debug("Hello\nWorld")
@@ -119,7 +117,7 @@ class TestSimpleLog(unittest.TestCase):
         Get a new logger and ...
         """
         # Reset Logger
-        termSpecs = {"color": True, "splitLines": False, "level": logging.DEBUG, "pretty": False }
+        termSpecs = {"color": True, "splitLines": False, "level": logging.DEBUG, "pretty": False}
         Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=None)
 
         strio = logging.getLoggerClass().mockHandler(0)
@@ -133,9 +131,8 @@ class TestSimpleLog(unittest.TestCase):
         Get a new logger and ...
         """
         # Reset Logger
-        termSpecs = {"color": True, "splitLines": False, "level": logging.DEBUG, "pretty": True }
+        termSpecs = {"color": True, "splitLines": False, "level": logging.DEBUG, "pretty": True}
         Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=None)
-
 
         strio = logging.getLoggerClass().mockHandler(0)
         logging.debug("Hello\nWorld")
@@ -156,7 +153,6 @@ class TestSimpleLog(unittest.TestCase):
         # Make sure 2 lines printed...
         self.assertEqual(5, len(strio.getvalue().splitlines()))
 
-
     #
     # File tests below here
     #
@@ -166,8 +162,8 @@ class TestSimpleLog(unittest.TestCase):
         Remove log and test console-like formatting
         """
         rmlog()
-        fileSpecs = [{"filename": LOGFILE, "level":logging.DEBUG}]
-        termSpecs = {"color": True, "splitLines": True, "level": logging.WARNING }
+        fileSpecs = [{"filename": LOGFILE, "level": logging.DEBUG}]
+        termSpecs = {"color": True, "splitLines": True, "level": logging.WARNING}
         Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=fileSpecs)
 
         logging.debug({"hello": 1, "world": 2})
@@ -182,8 +178,8 @@ class TestSimpleLog(unittest.TestCase):
         Remove log and test console-like formatting
         """
         rmlog()
-        fileSpecs = [{"filename": LOGFILE, "level":logging.DEBUG, "format": "console"}]
-        termSpecs = {"color": True, "splitLines": True, "level": logging.WARNING }
+        fileSpecs = [{"filename": LOGFILE, "level": logging.DEBUG, "format": "console"}]
+        termSpecs = {"color": True, "splitLines": True, "level": logging.WARNING}
         Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=fileSpecs)
 
         logging.debug({"hello": 1, "world": 2})
@@ -193,14 +189,13 @@ class TestSimpleLog(unittest.TestCase):
 
         self.assertEqual(1, len(cont.splitlines()))
 
-
     def test_009_file_console_pretty(self):
         """
         Remove log and test console-like formatting
         """
         rmlog()
-        fileSpecs = [{"filename": LOGFILE, "level":logging.DEBUG, "format": "console", "pretty": True}]
-        termSpecs = {"color": True, "splitLines": True, "level": logging.WARNING }
+        fileSpecs = [{"filename": LOGFILE, "level": logging.DEBUG, "format": "console", "pretty": True}]
+        termSpecs = {"color": True, "splitLines": True, "level": logging.WARNING}
         Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=fileSpecs)
 
         logging.debug({"hello": 1, "world": 2})
@@ -210,14 +205,13 @@ class TestSimpleLog(unittest.TestCase):
 
         self.assertEqual(4, len(cont.splitlines()))
 
-
     def test_010_file_default(self):
         """
         Remove log and test default formatting
         """
         rmlog()
-        fileSpecs = [{"filename": LOGFILE, "level":logging.DEBUG, "format": "default"}]
-        termSpecs = {"color": True, "splitLines": True, "level": logging.WARNING }
+        fileSpecs = [{"filename": LOGFILE, "level": logging.DEBUG, "format": "default"}]
+        termSpecs = {"color": True, "splitLines": True, "level": logging.WARNING}
         Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=fileSpecs)
 
         logging.debug({"hello": 1, "world": 2})
@@ -227,14 +221,13 @@ class TestSimpleLog(unittest.TestCase):
 
         self.assertEqual(1, len(cont.splitlines()), msg="Got: %s" % cont)
 
-
     def test_011_file_console_split(self):
         """
         Remove log and test default formatting
         """
         rmlog()
-        fileSpecs = [{"filename": LOGFILE, "level":logging.DEBUG, "format": "console", "splitLines": False}]
-        termSpecs = {"color": True, "splitLines": True, "level": logging.WARNING }
+        fileSpecs = [{"filename": LOGFILE, "level": logging.DEBUG, "format": "console", "splitLines": False}]
+        termSpecs = {"color": True, "splitLines": True, "level": logging.WARNING}
         Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=fileSpecs)
 
         logging.debug("Hello\nWorld")
@@ -249,8 +242,8 @@ class TestSimpleLog(unittest.TestCase):
         Remove log and test default formatting
         """
         rmlog()
-        fileSpecs = [{"filename": LOGFILE, "level":logging.DEBUG, "format": "json"}]
-        termSpecs = {"color": True, "splitLines": True, "level": logging.WARNING }
+        fileSpecs = [{"filename": LOGFILE, "level": logging.DEBUG, "format": "json"}]
+        termSpecs = {"color": True, "splitLines": True, "level": logging.WARNING}
         Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=fileSpecs)
 
         logging.debug("Hello\nWorld", extra={"when": "today"})
@@ -266,14 +259,13 @@ class TestSimpleLog(unittest.TestCase):
 
         self.assertEqual(True, "timestamp" in cont, msg="Got: %s" % str(cont))
 
-
     def test_013_file_json_dict(self):
         """
         Remove log and test default formatting
         """
         rmlog()
-        fileSpecs = [{"filename": LOGFILE, "level":logging.DEBUG, "format": "json"}]
-        termSpecs = {"color": True, "splitLines": True, "level": logging.WARNING }
+        fileSpecs = [{"filename": LOGFILE, "level": logging.DEBUG, "format": "json"}]
+        termSpecs = {"color": True, "splitLines": True, "level": logging.WARNING}
         Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=fileSpecs)
 
         logging.debug({"hello": "world"}, extra={"when": "today"})
@@ -284,14 +276,13 @@ class TestSimpleLog(unittest.TestCase):
         self.assertEqual(True, "hello" in cont, msg="Got: %s" % str(cont))
         self.assertEqual("world", cont["hello"], msg="Got: %s" % str(cont))
 
-
     def test_014_file_json_object(self):
         """
         Remove log and test default formatting
         """
         rmlog()
-        fileSpecs = [{"filename": LOGFILE, "level":logging.DEBUG, "format": "json"}]
-        termSpecs = {"color": True, "splitLines": True, "level": logging.WARNING }
+        fileSpecs = [{"filename": LOGFILE, "level": logging.DEBUG, "format": "json"}]
+        termSpecs = {"color": True, "splitLines": True, "level": logging.WARNING}
         Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=fileSpecs)
 
         logging.debug(["hello", "world"], extra={"when": "today"})
@@ -301,3 +292,56 @@ class TestSimpleLog(unittest.TestCase):
 
         self.assertEqual(True, "object" in cont, msg="Got: %s" % str(cont))
         self.assertEqual(["hello", "world"], cont["object"], msg="Got: %s" % str(cont))
+
+    def test_015_file_misconfig(self):
+        """
+        Test misconfiguration
+        """
+        rmlog()
+        with self.assertRaises(RuntimeError):
+            Logger.addFileLogger({"filename_": LOGFILE, "level": logging.DEBUG, "format": "json"})
+
+    def test_016_file_defaults(self):
+        """
+        Test default logging level for file
+        """
+        rmlog()
+        Logger.addFileLogger({"filename": LOGFILE})
+        self.assertEqual(logging.INFO, logging.getLogger().handlers[1].level)
+
+    def test_017_console_fmt(self):
+        """
+        Test formats
+        """
+        termSpecs = {"color": False}
+        Logger.init(
+            LOGDIR,
+            fmt='%(asctime)s %(levelname)-8s %(lineno)s: %(message)s',
+            datefmt="%Y",
+            termSpecs=termSpecs)
+
+        strio = logging.getLoggerClass().mockHandler(0)
+        logging.debug("hmmm")
+        # Now, put it back!
+        logging.getLoggerClass().restoreHandler(0)
+
+        now = datetime.datetime.now()
+        expect = "%s DEBUG" % now.year
+        self.assertTrue(
+            strio.getvalue().startswith(expect),
+            msg="Got: %s, expected: %s" % (strio.getvalue(), expect))
+
+    def test_018_set_levels(self):
+        """
+        Test default logging level for file
+        """
+        rmlog()
+        fileSpecs = [{"filename": LOGFILE, "level": logging.DEBUG, "format": "json"}]
+        termSpecs = {"color": True, "splitLines": True, "level": logging.WARNING}
+        Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=fileSpecs)
+
+        Logger.setConsoleLevel(logging.DEBUG)
+        Logger.setFileLevel(1, logging.WARNING)
+
+        self.assertEqual(logging.DEBUG, logging.getLogger().handlers[0].level)
+        self.assertEqual(logging.WARNING, logging.getLogger().handlers[1].level)
