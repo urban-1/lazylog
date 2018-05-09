@@ -319,7 +319,7 @@ Create a Virtual Environment and install dev-tools
 
     python3 -m venv venv
     . venv/bin/activate
-    pip install --upgrade coverage pipreqs Sphinx autopep8 twine wheel pip
+    pip install --upgrade coverage pipreqs Sphinx autopep8 twine wheel pip setuptools
 
 The project is controlled from the `Makefile`:
 

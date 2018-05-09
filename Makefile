@@ -54,7 +54,7 @@ dist: test_dist
 
 test_dist:
 	-@rm -r ./dist
-	python setup.py sdist
+	python setup.py bdist_wheel
 	twine upload -r pypitest dist/*
 
 

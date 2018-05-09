@@ -1,7 +1,7 @@
 SimpleLog
 =========
 
-|Build Status|
+|Build Status| |Documentation Status|
 
 Yet another python logger that aims to:
 
@@ -346,7 +346,7 @@ Create a Virtual Environment and install dev-tools
 
     python3 -m venv venv
     . venv/bin/activate
-    pip install --upgrade coverage pipreqs Sphinx autopep8 twine wheel pip
+    pip install --upgrade coverage pipreqs Sphinx autopep8 twine wheel pip setuptools
 
 The project is controlled from the ``Makefile``:
 
@@ -402,3 +402,5 @@ ones that will not read the source):
 
 .. |Build Status| image:: https://travis-ci.com/urban-1/simplelog.svg?branch=master
    :target: https://travis-ci.com/urban-1/simplelog
+.. |Documentation Status| image:: https://readthedocs.org/projects/simplelog/badge/?version=latest
+   :target: http://simplelog.readthedocs.io/en/latest/?badge=latest

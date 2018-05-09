@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from distutils.core import setup
+from setuptools import setup
 from subprocess import check_output, PIPE
 
 # Get the version
@@ -28,8 +28,8 @@ setup(
     'Environment :: Console',
     'Topic :: System :: Logging',
     'Intended Audience :: Developers',
-    'License :: OSI Approved :: MIT License',,
-    'Programming Language :: Python :: 2.6'
+    'License :: OSI Approved :: MIT License',
+    'Programming Language :: Python :: 2.6',
     'Programming Language :: Python :: 2.7',
     'Programming Language :: Python :: 3.4',
     'Programming Language :: Python :: 3.5',
