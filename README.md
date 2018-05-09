@@ -312,7 +312,7 @@ Create a Virtual Environment and install dev-tools
 
     python3 -m venv venv
     . venv/bin/activate
-    pip install coverage pipreqs Sphinx autopep8
+    pip install --upgrade coverage pipreqs Sphinx autopep8 twine wheel pip
 
 The project is controlled from the `Makefile`:
 
@@ -330,7 +330,7 @@ help         to print this message...
 To generate documentation you will need `pandoc` installed locally on your dev
 box. The target `all` will run `autopep coverage docs` targets in order.
 
-Coverage will be build and can be found in [docs/build/html/_static/coverage/](_static/coverage/index.html)
+Coverage will be build and can be found in [docs/build/html/_static/coverage/](http://_static/coverage/index.html)
 
 ### TODOs
 
