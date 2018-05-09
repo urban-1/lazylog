@@ -132,7 +132,7 @@ LOGFORMAT = '%(asctime)s.%(msecs)03d %(process)s:%(thread)u %(levelname)-8s %(mo
 ### Files
 
 In case where you (the developer) are not the one running the code, you most
-probably need a log-file! If you application is a CLI one, probably the end-user
+probably need a log-file! If your application is a CLI one, probably the end-user
 should not be seeing all the debugging info, but warnings and errors only. Python
 logging facility supports multiple handlers working simultaneously and `simplelog`
 allows you to use this feature hassle-free. To define a file logger do:

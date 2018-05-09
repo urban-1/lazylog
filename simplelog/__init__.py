@@ -9,7 +9,7 @@ import logging.handlers
 try:
     from StringIO import StringIO
     str_types = basestring,
-except:
+except BaseException:
     from io import StringIO
     str_types = str,
 
@@ -43,7 +43,6 @@ class Logger(logging.getLoggerClass()):
     LOGFORMAT = '%(asctime)s.%(msecs)03d %(process)s:%(thread)u %(levelname)-8s %(module)15.15s %(lineno)-4s: %(message)s'
     '''Default log format for all handlers. This can change in :py:meth:`init`'''
 
-
     @classmethod
     def _chkdir(cls):
         '''
@@ -52,7 +51,7 @@ class Logger(logging.getLoggerClass()):
         if not os.path.isdir(cls.LOGDIR):
             try:
                 mkdir_p(cls.LOGDIR)
-            except:
+            except BaseException:
                 # Do not log... logging here enables the
                 # root logger...
                 pass
@@ -90,7 +89,7 @@ class Logger(logging.getLoggerClass()):
             # Make sure the file is there
             fhandle = open(filePath, 'a')
             fhandle.close()
-        except:
+        except BaseException:
             logging.error('NOT Initializing File Logging: File-system permissions error: \n\t%s' % filePath)
             # No point doing anything else!
             return
@@ -143,7 +142,7 @@ class Logger(logging.getLoggerClass()):
              fileSpecs=None,
              fmt=None,
              datefmt=None
-        ):
+             ):
         '''
         Intialize logging based on the requested fileName. This
         will create one logger (global) that writes in both file
@@ -261,24 +260,21 @@ class ColorFormatter(logging.Formatter):
     RESET_SEQ = '\033[0m'
     '''Reset color sequence'''
 
-
     TERMDEFAULTS = {
-       'color': True,
-       'splitLines': True,
-       'level': logging.DEBUG,
-       'pretty': True
+        'color': True,
+        'splitLines': True,
+        'level': logging.DEBUG,
+        'pretty': True
     }
     '''Terminal default settings'''
 
     FILEDEFAULTS = {
-       'color': False,
-       'splitLines': True,
-       'level': logging.INFO,
-       'pretty': False
+        'color': False,
+        'splitLines': True,
+        'level': logging.INFO,
+        'pretty': False
     }
     '''File default settings'''
-
-
 
     STYLES = {
         'DEBUG': NORM,
@@ -310,7 +306,6 @@ class ColorFormatter(logging.Formatter):
         self.colors = colors if colors is not None else ColorFormatter.COLORS
         self.styles = styles if styles is not None else ColorFormatter.STYLES
 
-
     def format(self, record):
         '''
         Override format function
@@ -325,15 +320,13 @@ class ColorFormatter(logging.Formatter):
             isinstance(record.msg, dict) or
             isinstance(record.msg, tuple) or
             isinstance(record.msg, list)
-            ):
+        ):
 
             # Copy so we do not modify the original message
             tmp_record = copy.copy(record)
             tmp_record.msg = pretty(tmp_record.msg)
 
-
         msg = logging.Formatter.format(self, tmp_record)
-
 
         if self.splitLines and tmp_record.message != '':
             parts = msg.split(tmp_record.message)
@@ -355,7 +348,6 @@ class ColorFormatter(logging.Formatter):
 
         return msg
 
-
     @staticmethod
     def parseSpecs(specs, defaults):
         '''
@@ -371,6 +363,7 @@ class ColorFormatter(logging.Formatter):
             specs['splitLines'] = True
 
         return specs
+
 
 class JSONFormatter(logging.Formatter):
     '''
@@ -389,7 +382,6 @@ class JSONFormatter(logging.Formatter):
         'funcName', 'levelname', 'levelno', 'lineno', 'module',
         'msecs', 'message', 'msg', 'name', 'pathname', 'process',
         'processName', 'relativeCreated', 'stack_info', 'thread', 'threadName')
-
 
     FIELDS = [
         'created',
@@ -442,6 +434,8 @@ class JSONFormatter(logging.Formatter):
 #
 # Helpers and utilities
 #
+
+
 def pretty_recursive(value, htchar='\t', lfchar='\n', indent=0):
     '''
     Recursive pretty printing of dict, list and tuples - full creadit to:
