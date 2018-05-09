@@ -44,6 +44,7 @@ coverage:
 	coverage html -d "$(CURDIR)/docs/source/_static/coverage"
 
 tests:
+	chmod +x "$(CURDIR)/test.py"
 	"$(CURDIR)/test.py"
 
 dist: test_dist
