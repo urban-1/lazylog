@@ -12,7 +12,7 @@ setup(
   version = version,
   description = 'Yet another python logger that implifies json file logging and prettifies console output',
   long_description=open("docs/source/README.rst").read(),
-  long_description_content_type='text/markdown',
+  #long_description_content_type='text/markdown',
   author = 'Andreas Bontozoglou',
   author_email = 'bodozoglou@gmail.com',
   url = 'https://github.com/urban-1/simplelog',
