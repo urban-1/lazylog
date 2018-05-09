@@ -47,12 +47,12 @@ tests:
 	"$(CURDIR)/test.py"
 
 dist: test_dist
-	@rm -r ./dist
+	-@rm -r ./dist
 	python setup.py sdist
 	twine upload dist/*
 
 test_dist:
-	@rm -r ./dist
+	-@rm -r ./dist
 	python setup.py sdist
 	twine upload -r pypitest dist/*
 

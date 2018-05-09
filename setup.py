@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from distutils.core import setup
 from subprocess import check_output, PIPE
 
@@ -10,7 +11,7 @@ setup(
   packages = ['simplelog'],
   version = version,
   description = 'Yet another python logger that implifies json file logging and prettifies console output',
-  long_description=open("README.md").read(),
+  long_description=open("docs/source/README.rst").read(),
   long_description_content_type='text/markdown',
   author = 'Andreas Bontozoglou',
   author_email = 'bodozoglou@gmail.com',
