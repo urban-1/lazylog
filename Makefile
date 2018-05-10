@@ -10,7 +10,7 @@ BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 
 .PHONY: all coverage docs autopep tests help dist
 
-all: autopep coverage docs _update_version
+all: autopep coverage docs
 
 
 help:
@@ -28,7 +28,7 @@ help:
 	@echo "  help         to print this message..."
 	@echo
 
-docs: _update_version
+docs:
 	pandoc --from=markdown --to=rst --output=${CURDIR}/docs/source/README.rst README.md
 	@(cd "$(CURDIR)/docs" && sphinx-apidoc -o ./source "$(CURDIR)/$(IMAGE_NAME)" -f && make html)
 
@@ -50,21 +50,22 @@ tests:
 	chmod +x "$(CURDIR)/test.py"
 	"$(CURDIR)/test.py"
 
-dist: _update_version
+dist:
 	-@rm -r ./dist ./*.egg-info ./build
+	@echo ${PROJ_VERSION} > $(CURDIR)/VERSION
 	python setup.py sdist
+	@rm $(CURDIR)/VERSION
 	twine upload dist/*
 
-test_dist: _update_version
+test_dist:
 	-@rm -r ./dist ./*.egg-info ./build
+	@echo ${PROJ_VERSION} > $(CURDIR)/VERSION
 	python setup.py bdist_wheel
+	@rm $(CURDIR)/VERSION
 	twine upload -r pypitest dist/*
 
 distclean:
 	-@rm -r ./dist ./*.egg-info ./build ./docs/build ./.coverage ./docs/source/_static/coverage
-
-_update_version:
-	@echo ${PROJ_VERSION} > $(CURDIR)/VERSION
 
 # docker: docker_build docker_tag docker_push
 #

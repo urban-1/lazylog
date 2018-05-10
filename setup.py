@@ -1,7 +1,5 @@
-
 import os
 from setuptools import setup
-
 
 # Get the version
 with open(os.path.join(os.path.dirname(__file__), 'VERSION')) as version_file:
