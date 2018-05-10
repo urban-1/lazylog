@@ -4,7 +4,7 @@ REGISTRY  := NA
 IMAGE_NAME := simplelog
 IMAGE_NS := NA
 
-PROJ_VERSION := $(shell git describe --always)
+PROJ_VERSION := $(shell git describe --always --match 'v[0-9]\.[0-9]')
 BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 
 
@@ -22,6 +22,9 @@ help:
 	@echo "  autopep      to fix coding style in the project"
 	@echo "  tests        to run project's tests (actually parsers)"
 	@echo "  coverage     to run coverage against the tests"
+	@echo "  dist         to push a new package to pypi (live)"
+	@echo "  test_dist    to push a new package to test.pypi (test)"
+	@echo "  distclean    to bring the folder in git-clone state"
 	@echo "  help         to print this message..."
 	@echo
 
@@ -47,17 +50,18 @@ tests:
 	chmod +x "$(CURDIR)/test.py"
 	"$(CURDIR)/test.py"
 
-dist:  test_dist
+dist:
 	-@rm -r ./dist ./*.egg-info ./build
 	python setup.py sdist
 	twine upload dist/*
 
-test_dist: distclean
+test_dist:
+	-@rm -r ./dist ./*.egg-info ./build
 	python setup.py bdist_wheel
 	twine upload -r pypitest dist/*
 
 distclean:
-	-@rm -r ./dist ./*.egg-info ./build
+	-@rm -r ./dist ./*.egg-info ./build ./docs/build ./coverage
 
 # docker: docker_build docker_tag docker_push
 #

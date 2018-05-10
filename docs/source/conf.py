@@ -34,13 +34,14 @@ copyright = '2018, Andreas Bontozoglou'
 author = 'Andreas Bontozoglou'
 
 # Get the version
-out = check_output(["git", "describe", "--always"]).strip().decode("ascii")
-out = '.'.join(out.split('-')[:2])
+out = (check_output(["git", "describe", "--always", "--match 'v[0-9]\.[0-9]'"])
+       .strip()
+       .decode("ascii"))
 
 # The short X.Y version
-version = out
+version = out.split('-')[0]
 # The full version, including alpha/beta/rc tags
-release = out
+release = '.'.join(out.split('-')[:2])
 
 
 # -- General configuration ---------------------------------------------------

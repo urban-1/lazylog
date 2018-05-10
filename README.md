@@ -326,18 +326,23 @@ The project is controlled from the `Makefile`:
 ```text
 Please use `make <target>' where <target> is one of
 
-docs         to make standalone HTML files (in docs/build)
-reqs         to generate the pip requirements file in etc/
-autopep      to fix coding style in the project
-tests        to run project's tests (actually parsers)
-coverage     to run coverage against the tests
-help         to print this message...
+  docs         to make standalone HTML files (in docs/build)
+  reqs         to generate the pip requirements file in etc/
+  autopep      to fix coding style in the project
+  tests        to run project's tests (actually parsers)
+  coverage     to run coverage against the tests
+  dist         to push a new package to pypi (live)
+  test_dist    to push a new package to test.pypi (test)
+  distclean    to bring the folder in git-clone state
+  help         to print this message...
 ```
 
 To generate documentation you will need `pandoc` installed locally on your dev
 box. The target `all` will run `autopep coverage docs` targets in order.
 
-Coverage will be build and can be found in [docs/build/html/_static/coverage/](_static/coverage/index.html)
+Coverage will be build and can be found in
+[docs/build/html/_static/coverage/](http://simplelog.readthedocs.io/en/latest/_static/coverage/index.html).
+
 
 ### TODOs
 
