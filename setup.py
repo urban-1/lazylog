@@ -5,7 +5,7 @@ from setuptools import setup
 with open(os.path.join(os.path.dirname(__file__), 'VERSION')) as version_file:
     version = version_file.read().strip()
 
-version = '.'.join(version.split("-")[:2])
+version = '.'.join(version.split("-")[:2])[1:]
 
 print("\n*** FOUND VERSION: %s ***\n" % version)
 
