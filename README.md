@@ -20,6 +20,15 @@ Yet another python logger that aims to:
     -   Handles logfile permissions for multi-user deployments
     -   Supports easy logger mocking (into StringIO)
 
+## Install
+
+You can install this lib via `pip`:
+
+    pip install simplelog
+
+or you can just download the code in your project:
+
+    curl https://raw.githubusercontent.com/urban-1/simplelog/master/simplelog/__init__.py > /path/to/simplelog.py
 
 ## Usage
 
