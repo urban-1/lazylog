@@ -1,13 +1,14 @@
-#!/usr/bin/env python
+
+import os
 from setuptools import setup
-from subprocess import check_output, PIPE
+
 
 # Get the version
-version = (check_output(["git", "describe", "--always", "--match", "v[0-9]*"])
-         .strip()
-         .decode("ascii"))
+with open(os.path.join(os.path.dirname(__file__), 'VERSION')) as version_file:
+    version = version_file.read().strip()
 
 version = '.'.join(version.split("-")[:2])
+
 print("\n*** FOUND VERSION: %s ***\n" % version)
 
 setup(

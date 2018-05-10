@@ -4,7 +4,7 @@ REGISTRY  := NA
 IMAGE_NAME := lazylog
 IMAGE_NS := NA
 
-PROJ_VERSION := $(shell git describe --always)
+PROJ_VERSION := $(shell git describe --always --match 'v[0-9]*')
 BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 
 
@@ -50,18 +50,21 @@ tests:
 	chmod +x "$(CURDIR)/test.py"
 	"$(CURDIR)/test.py"
 
-dist:
+dist: _update_version
 	-@rm -r ./dist ./*.egg-info ./build
 	python setup.py sdist
 	twine upload dist/*
 
-test_dist:
+test_dist: _update_version
 	-@rm -r ./dist ./*.egg-info ./build
 	python setup.py bdist_wheel
 	twine upload -r pypitest dist/*
 
 distclean:
 	-@rm -r ./dist ./*.egg-info ./build ./docs/build ./.coverage ./docs/source/_static/coverage
+
+_update_version:
+	@echo ${PROJ_VERSION} > $(CURDIR)/VERSION
 
 # docker: docker_build docker_tag docker_push
 #
