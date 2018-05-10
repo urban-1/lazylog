@@ -1,10 +1,10 @@
-simplelog package
-=================
+lazylog package
+===============
 
 Module contents
 ---------------
 
-.. automodule:: simplelog
+.. automodule:: lazylog
     :members:
     :undoc-members:
     :show-inheritance:

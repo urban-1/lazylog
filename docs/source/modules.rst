@@ -1,7 +1,7 @@
-simplelog
-=========
+lazylog
+=======
 
 .. toctree::
    :maxdepth: 4
 
-   simplelog
+   lazylog

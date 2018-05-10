@@ -13,7 +13,7 @@ LOGPATH2 = "%s/%s" % (LOGDIR, LOGFILE2)
 ROOTDIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(ROOTDIR)
 
-from simplelog import Logger
+from lazylog import Logger
 
 #
 # 1. Default file log

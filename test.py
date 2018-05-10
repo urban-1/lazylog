@@ -16,15 +16,15 @@ import logging as lg
 ROOTDIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(ROOTDIR)
 
-from simplelog import Logger
+from lazylog import Logger
 
 LOGDIR = tempfile.gettempdir()
-log_file = "simplelogtests.log"
+log_file = "lazylogtests.log"
 result = False
 
 def main():
     global result
-    parser = argparse.ArgumentParser(usage="%(prog)s [options]\n\n\tTest simplelog")
+    parser = argparse.ArgumentParser(usage="%(prog)s [options]\n\n\tTest lazylog")
     parser.add_argument('-t', '--tests', nargs="*", required=False, help="Run specific tests (multiple can be specified)")
     parser.add_argument('-d', '--debug', required=False, help="Enable DEBUG Logging", action='store_true')
     parser.add_argument('-v', '--verbosity', type=int, required=False, help="Verbosity level (test suite), default 1", default=1)

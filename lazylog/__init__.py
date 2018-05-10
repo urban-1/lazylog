@@ -139,7 +139,7 @@ class Logger(logging.getLoggerClass()):
 
     @classmethod
     def init(cls,
-             folder='/var/log/simplelog',
+             folder='/var/log/lazylog',
              termSpecs={},
              fileSpecs=None,
              fmt=None,

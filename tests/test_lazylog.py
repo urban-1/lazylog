@@ -6,7 +6,7 @@ import unittest
 import tempfile
 import traceback
 import datetime
-from simplelog import Logger
+from lazylog import Logger
 
 LOGDIR = tempfile.gettempdir()
 LOGFILE = "tmp-simple.log"
@@ -20,9 +20,9 @@ def rmlog():
         pass
 
 
-class TestSimpleLog(unittest.TestCase):
+class Testlazylog(unittest.TestCase):
     """
-    Test simplelog basic functionality
+    Test lazylog basic functionality
     """
 
     @classmethod
@@ -38,7 +38,7 @@ class TestSimpleLog(unittest.TestCase):
         """
         Get a new logger and ...
         """
-        lg = logging.getLogger("simplelog")
+        lg = logging.getLogger("lazylog")
 
         # Put in StringIO mode
         strio = logging.getLoggerClass().mockHandler(0)
@@ -51,9 +51,9 @@ class TestSimpleLog(unittest.TestCase):
 
         if sys.version_info[0] >= 3:
             # Finally, check we are back in stderr
-            with self.assertLogs('simplelog', level='INFO') as cm:
+            with self.assertLogs('lazylog', level='INFO') as cm:
                 lg.info("Hello\nWorld")
-            self.assertEqual(cm.output, ['INFO:simplelog:Hello\nWorld'])
+            self.assertEqual(cm.output, ['INFO:lazylog:Hello\nWorld'])
 
     def test_002_pretty(self):
         """

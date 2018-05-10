@@ -9,7 +9,7 @@ if "%SPHINXBUILD%" == "" (
 )
 set SOURCEDIR=source
 set BUILDDIR=build
-set SPHINXPROJ=simplelog
+set SPHINXPROJ=lazylog
 
 if "%1" == "" goto help
 

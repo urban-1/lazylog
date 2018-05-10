@@ -1,7 +1,7 @@
-# SimpleLog
+# LazyLog
 
-[![Build Status](https://travis-ci.com/urban-1/simplelog.svg?branch=master)](https://travis-ci.com/urban-1/simplelog)
-[![Documentation Status](https://readthedocs.org/projects/simplelog/badge/?version=latest)](http://simplelog.readthedocs.io/en/latest/?badge=latest)
+[![Build Status](https://travis-ci.com/urban-1/lazylog.svg?branch=master)](https://travis-ci.com/urban-1/lazylog)
+[![Documentation Status](https://readthedocs.org/projects/lazylog/badge/?version=latest)](http://lazylog.readthedocs.io/en/latest/?badge=latest)
 
 
 Yet another python logger that aims to:
@@ -24,25 +24,25 @@ Yet another python logger that aims to:
 
 You can install this lib via `pip`:
 
-    pip install simplelog
+    pip install lazylog
 
 or you can just download the code in your project:
 
-    curl https://raw.githubusercontent.com/urban-1/simplelog/master/simplelog/__init__.py > /path/to/simplelog.py
+    curl https://raw.githubusercontent.com/urban-1/lazylog/master/lazylog/__init__.py > /path/to/lazylog.py
 
 ## Usage
 
 **NOTE:** For pretty colors on this README please visit the
-[readthedocs version](http://simplelog.readthedocs.io/en/latest/)
+[readthedocs version](http://lazylog.readthedocs.io/en/latest/)
 
 **NOTE2:** You can find all the sources of this section in `examples` folder
 
 ### Basics
 
-In the simplest form, you can initialize `simplelog` with:
+In the simplest form, you can initialize `lazylog` with:
 
     # Import the Logger class
-    from simplelog import Logger
+    from lazylog import Logger
 
     # Initialize with all defaults
     Logger.init()
@@ -57,7 +57,7 @@ This creates a console-only logger with all the values set to their defaults:
        'pretty': True
     }
 
--   `color`: Instructs `simplelog` to use different colors for different levels
+-   `color`: Instructs `lazylog` to use different colors for different levels
 -   `splitLines`: Enables handling new-lines by re-printing the preamble on every
     line
 -   `level`: As usual, sets the logging level for the terminal
@@ -101,7 +101,7 @@ The output should look like:
 
 ### Customizing
 
-You can customize `simplelog` and disable any of the features you don't like, so
+You can customize `lazylog` and disable any of the features you don't like, so
 
 ```python
 # Init
@@ -154,7 +154,7 @@ LOGFORMAT = '%(asctime)s.%(msecs)03d %(process)s:%(thread)u %(levelname)-8s %(mo
 In case where you (the developer) are not the one running the code, you most
 probably need a log-file! If your application is a CLI one, probably the end-user
 should not be seeing all the debugging info, but warnings and errors only. Python
-logging facility supports multiple handlers working simultaneously and `simplelog`
+logging facility supports multiple handlers working simultaneously and `lazylog`
 allows you to use this feature hassle-free. To define a file logger do:
 
     termSpecs = {"level": logging.DEBUG}
@@ -217,7 +217,7 @@ while with `pretty: True` you get:
 
 JSON logging is most useful when we need to index our logs to a database or
 stream them and generally for machine-to-machine communication. At the moment,
-`simplelog` does not support JSON logging on the terminal but does support it
+`lazylog` does not support JSON logging on the terminal but does support it
 for files. To enable it, initialize with:
 
 ```python

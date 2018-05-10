@@ -24,7 +24,7 @@ Please use `make <target>' where <target> is one of
   help         to print this message...
 ```
 The target `all` will run `autopep coverage docs` targets in order. Coverage will be build and can be found in
-[docs/build/html/_static/coverage/](http://simplelog.readthedocs.io/en/latest/_static/coverage/index.html).
+[docs/build/html/_static/coverage/](http://lazylog.readthedocs.io/en/latest/_static/coverage/index.html).
 
 
 To generate documentation you will need `pandoc` installed locally on your dev
@@ -85,6 +85,7 @@ The release process (WIP)
     Up until here you can still make changes and run tests again.
 -   `make all` to run tests, generate coverage and docs
 -   `git commit` and `tag` as required: `rX.Y.Z` for patches. `vX.Y` for major/minor releases
+-   `make test_dist` will push to test.pypi.org - check it out
 -   `make dist` will push to pypi
 -   `git push` and `git push --tags` to trigger readthedocs and update the repo
 

@@ -1,5 +1,5 @@
-SimpleLog
-=========
+LazyLog
+=======
 
 |Build Status| |Documentation Status|
 
@@ -27,19 +27,19 @@ You can install this lib via ``pip``:
 
 ::
 
-    pip install simplelog
+    pip install lazylog
 
 or you can just download the code in your project:
 
 ::
 
-    curl https://raw.githubusercontent.com/urban-1/simplelog/master/simplelog/__init__.py > /path/to/simplelog.py
+    curl https://raw.githubusercontent.com/urban-1/lazylog/master/lazylog/__init__.py > /path/to/lazylog.py
 
 Usage
 -----
 
 **NOTE:** For pretty colors on this README please visit the `readthedocs
-version <http://simplelog.readthedocs.io/en/latest/>`__
+version <http://lazylog.readthedocs.io/en/latest/>`__
 
 **NOTE2:** You can find all the sources of this section in ``examples``
 folder
@@ -47,12 +47,12 @@ folder
 Basics
 ~~~~~~
 
-In the simplest form, you can initialize ``simplelog`` with:
+In the simplest form, you can initialize ``lazylog`` with:
 
 ::
 
     # Import the Logger class
-    from simplelog import Logger
+    from lazylog import Logger
 
     # Initialize with all defaults
     Logger.init()
@@ -69,7 +69,7 @@ defaults:
        'pretty': True
     }
 
--  ``color``: Instructs ``simplelog`` to use different colors for
+-  ``color``: Instructs ``lazylog`` to use different colors for
    different levels
 -  ``splitLines``: Enables handling new-lines by re-printing the
    preamble on every line
@@ -118,8 +118,8 @@ The output should look like:
 Customizing
 ~~~~~~~~~~~
 
-You can customize ``simplelog`` and disable any of the features you
-don't like, so
+You can customize ``lazylog`` and disable any of the features you don't
+like, so
 
 .. code:: python
 
@@ -181,7 +181,7 @@ In case where you (the developer) are not the one running the code, you
 most probably need a log-file! If your application is a CLI one,
 probably the end-user should not be seeing all the debugging info, but
 warnings and errors only. Python logging facility supports multiple
-handlers working simultaneously and ``simplelog`` allows you to use this
+handlers working simultaneously and ``lazylog`` allows you to use this
 feature hassle-free. To define a file logger do:
 
 ::
@@ -248,7 +248,7 @@ JSON format
 
 JSON logging is most useful when we need to index our logs to a database
 or stream them and generally for machine-to-machine communication. At
-the moment, ``simplelog`` does not support JSON logging on the terminal
+the moment, ``lazylog`` does not support JSON logging on the terminal
 but does support it for files. To enable it, initialize with:
 
 .. code:: python
@@ -367,7 +367,7 @@ ones that will not read the source):
 -  Prettifying structures::
    http://stackoverflow.com/questions/3229419/pretty-printing-nested-dictionaries-in-python
 
-.. |Build Status| image:: https://travis-ci.com/urban-1/simplelog.svg?branch=master
-   :target: https://travis-ci.com/urban-1/simplelog
-.. |Documentation Status| image:: https://readthedocs.org/projects/simplelog/badge/?version=latest
-   :target: http://simplelog.readthedocs.io/en/latest/?badge=latest
+.. |Build Status| image:: https://travis-ci.com/urban-1/lazylog.svg?branch=master
+   :target: https://travis-ci.com/urban-1/lazylog
+.. |Documentation Status| image:: https://readthedocs.org/projects/lazylog/badge/?version=latest
+   :target: http://lazylog.readthedocs.io/en/latest/?badge=latest

@@ -11,21 +11,21 @@ version = '.'.join(version.split("-")[:2])
 print("\n*** FOUND VERSION: %s ***\n" % version)
 
 setup(
-  name = 'simplelog',
-  packages = ['simplelog'],
+  name = 'lazylog',
+  packages = ['lazylog'],
   version = version,
   description = 'Yet another python logger that simplifies json file logging and prettifies console output',
   long_description=open("README.md").read(),
   long_description_content_type='text/markdown',
   author = 'Andreas Bontozoglou',
   author_email = 'bodozoglou@gmail.com',
-  url = 'http://simplelog.readthedocs.io/en/latest/',
+  url = 'http://lazylog.readthedocs.io/en/latest/',
   project_urls={
-    'Documentation': 'http://simplelog.readthedocs.io/en/latest/',
-    'Source': 'https://github.com/urban-1/simplelog',
-    'Tracker': 'https://github.com/urban-1/simplelog/issues',
+    'Documentation': 'http://lazylog.readthedocs.io/en/latest/',
+    'Source': 'https://github.com/urban-1/lazylog',
+    'Tracker': 'https://github.com/urban-1/lazylog/issues',
   },
-  download_url = 'https://github.com/urban-1/simplelog/archive/master.tar.gz',
+  download_url = 'https://github.com/urban-1/lazylog/archive/master.tar.gz',
   keywords = ['logging', 'color', 'logfile', 'json'],
   classifiers = [
     'Development Status :: 4 - Beta',

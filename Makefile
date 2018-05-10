@@ -1,7 +1,7 @@
 DOC_SERVER := NA
 
 REGISTRY  := NA
-IMAGE_NAME := simplelog
+IMAGE_NAME := lazylog
 IMAGE_NS := NA
 
 PROJ_VERSION := $(shell git describe --always)
@@ -61,7 +61,7 @@ test_dist:
 	twine upload -r pypitest dist/*
 
 distclean:
-	-@rm -r ./dist ./*.egg-info ./build ./docs/build ./coverage
+	-@rm -r ./dist ./*.egg-info ./build ./docs/build ./.coverage ./docs/source/_static/coverage
 
 # docker: docker_build docker_tag docker_push
 #
