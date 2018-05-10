@@ -10,7 +10,7 @@ BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 
 .PHONY: all coverage docs autopep tests help dist
 
-all: autopep coverage docs
+all: autopep coverage docs _update_version
 
 
 help:
@@ -28,7 +28,7 @@ help:
 	@echo "  help         to print this message..."
 	@echo
 
-docs:
+docs: _update_version
 	pandoc --from=markdown --to=rst --output=${CURDIR}/docs/source/README.rst README.md
 	@(cd "$(CURDIR)/docs" && sphinx-apidoc -o ./source "$(CURDIR)/$(IMAGE_NAME)" -f && make html)
 
