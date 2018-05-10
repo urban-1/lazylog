@@ -337,54 +337,6 @@ I would really not suggest this... but you get
      default
     08-05-2018 15:57:24.120 16142:140509479982912 WARNING          logfile 71  : But I don't like it...
 
-Developing
-----------
-
-Create a Virtual Environment and install dev-tools
-
-::
-
-    python3 -m venv venv
-    . venv/bin/activate
-    pip install --upgrade coverage pipreqs Sphinx autopep8 twine wheel pip setuptools
-
-The project is controlled from the ``Makefile``:
-
-.. code:: text
-
-    Please use `make <target>' where <target> is one of
-
-    docs         to make standalone HTML files (in docs/build)
-    reqs         to generate the pip requirements file in etc/
-    autopep      to fix coding style in the project
-    tests        to run project's tests (actually parsers)
-    coverage     to run coverage against the tests
-    help         to print this message...
-
-To generate documentation you will need ``pandoc`` installed locally on
-your dev box. The target ``all`` will run ``autopep coverage docs``
-targets in order.
-
-Coverage will be build and can be found in
-`docs/build/html/\_static/coverage/ <_static/coverage/index.html>`__
-
-TODOs
-~~~~~
-
-Below is a list of features/ideas that have not been implemented either
-to keep things simple, or because they were not needed by any of my
-projects. Feel free to pick-em up or ask for them if you think are
-necessary.
-
--  [ ] Maybe implement the ``format`` for termSpecs to allow JSON
-   logging on the console.
--  [ ] Log and date formats are currently class members of logging,
-   modify to allow different handlers to have different formats
--  [ ] Add support for Exception logging. At the moment this can be done
-   "manually" with ``traceback`` module and ``format_exc()``
--  [ ] Same as formats, ``LOGDIR`` is considered to be one and is a
-   static property. Change this to allow log-files in multiple locations
-
 Acknowledgements
 ----------------
 

@@ -4,7 +4,7 @@ REGISTRY  := NA
 IMAGE_NAME := simplelog
 IMAGE_NS := NA
 
-PROJ_VERSION := $(shell git describe --always --match 'v[0-9]\.[0-9]')
+PROJ_VERSION := $(shell git describe --always)
 BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 
 

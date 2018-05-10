@@ -23,14 +23,33 @@ Please use `make <target>' where <target> is one of
   distclean    to bring the folder in git-clone state
   help         to print this message...
 ```
-
-To generate documentation you will need `pandoc` installed locally on your dev
-box. The target `all` will run `autopep coverage docs` targets in order.
-
-Coverage will be build and can be found in
+The target `all` will run `autopep coverage docs` targets in order. Coverage will be build and can be found in
 [docs/build/html/_static/coverage/](http://simplelog.readthedocs.io/en/latest/_static/coverage/index.html).
 
-## Versioning and releasing
+
+To generate documentation you will need `pandoc` installed locally on your dev
+box:
+
+    # Debian
+    sudo apt-get install pandoc
+
+    # RHEL (you might need epel-release repo enabled)
+    sudo yum install pandoc
+
+    # Mac
+    brew install pandoc
+
+## Branching
+
+Basic rules only, use:
+
+-   `fix_` for bug patching
+-   `feature_` for new features: One feature in each branch (I know is tempting
+    ... but adding more than one things in a branch causes a lot of trouble l
+    ater!)
+
+
+## Versioning
 
 This project uses `git describe` to generate version number and thus our format
 is:
@@ -48,11 +67,31 @@ is:
 
 The project version is always in the format of `vX.Y` without the patch version,
 however, releasing patches to pypi is also supported since pypi uses the full
-version in `vX.Y.Z` format. To tag patch releases on Git (in order to track them)
-we use `rX.Y.Z`.
+version in `-X.Y.Z` format. To tag patch releases on Git (in order to track them)
+we use `rX.Y.Z` so `git describe` is not picking these tags up. Basic rules:
 
+-   Patch releases should never change API or introduce new features
+-   Minor version releases should be tagged and should not change API, but they
+    can introduce new features
+-   Major will be upped either because of API changes, or arbitrarily to lower
+    the minor and patch numbers
 
-### TODOs
+## Releasing
+
+The release process (WIP)
+
+-   `git merge` to bring the master up to date with any feature branches
+-   `make tests` to ensure everything is passing (or wait for Travis to finish).
+    Up until here you can still make changes and run tests again.
+-   `git tag` as required: `rX.Y.Z` for patches. `vX.Y` for major/minor releases
+-   `make all` to run tests, generate coverage and docs
+-   `make dist` will push to pypi
+-   `git push` and `git push --tags` to trigger readthedocs and update the repo
+
+All releases should be tested on test.pypi.org first to verify that it looks ok.
+You can use `make test_dist` to do this.
+
+## TODOs
 
 Below is a list of features/ideas that have not been implemented either to keep
 things simple, or because they were not needed by any of my projects. Feel free

@@ -3,12 +3,12 @@ from setuptools import setup
 from subprocess import check_output, PIPE
 
 # Get the version
-version = (check_output(["git", "describe", "--always", "--match 'v[0-9]\.[0-9]'"])
+version = (check_output(["git", "describe", "--always", "--match", "v[0-9]*"])
          .strip()
          .decode("ascii"))
 
-version = '.'.join(version[:2])
-
+version = '.'.join(version.split("-")[:2])
+print("\n*** FOUND VERSION: %s ***\n" % version)
 
 setup(
   name = 'simplelog',

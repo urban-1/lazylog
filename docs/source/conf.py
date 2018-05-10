@@ -34,7 +34,7 @@ copyright = '2018, Andreas Bontozoglou'
 author = 'Andreas Bontozoglou'
 
 # Get the version
-out = (check_output(["git", "describe", "--always", "--match 'v[0-9]\.[0-9]'"])
+out = (check_output(["git", "describe", "--always", "--match", "v[0-9]*"])
        .strip()
        .decode("ascii"))
 
