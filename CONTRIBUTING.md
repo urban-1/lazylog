@@ -83,8 +83,8 @@ The release process (WIP)
 -   `git merge` to bring the master up to date with any feature branches
 -   `make tests` to ensure everything is passing (or wait for Travis to finish).
     Up until here you can still make changes and run tests again.
--   `git tag` as required: `rX.Y.Z` for patches. `vX.Y` for major/minor releases
 -   `make all` to run tests, generate coverage and docs
+-   `git commit` and `tag` as required: `rX.Y.Z` for patches. `vX.Y` for major/minor releases
 -   `make dist` will push to pypi
 -   `git push` and `git push --tags` to trigger readthedocs and update the repo
 
