@@ -184,13 +184,17 @@ class Logger(logging.getLoggerClass()):
         # Console logger
         console = logging.StreamHandler()
         console.setLevel(termSpecs['level'])
-        formatter = ColorFormatter(
-            fmt,
-            datefmt=datefmt,
-            color=termSpecs['color'],
-            splitLines=termSpecs['splitLines'],
-            pretty=termSpecs['pretty'])
-
+        if 'format' not in termSpecs:
+            formatter = ColorFormatter(
+                fmt,
+                datefmt=datefmt,
+                color=termSpecs['color'],
+                splitLines=termSpecs['splitLines'],
+                pretty=termSpecs['pretty'])
+        elif termSpecs['format'] == 'json':
+            if 'fields' not in termSpecs:
+                termSpecs['fields'] = JSONFormatter.FIELDS
+            formatter = JSONFormatter(termSpecs['fields'])
         console.setFormatter(formatter)
         console.propagate = False
         root.addHandler(console)
