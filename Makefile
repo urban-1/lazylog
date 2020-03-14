@@ -19,6 +19,7 @@ help:
 	@echo
 	@echo "  docs         to make standalone HTML files (in docs/build)"
 	@echo "  reqs         to generate the pip requirements file in etc/"
+	@echo "  black        to fix formatting"
 	@echo "  autopep      to fix coding style in the project"
 	@echo "  tests        to run project's tests (actually parsers)"
 	@echo "  coverage     to run coverage against the tests"
@@ -33,7 +34,10 @@ docs:
 	@(cd "$(CURDIR)/docs" && sphinx-apidoc -o ./source "$(CURDIR)/$(IMAGE_NAME)" -f && make html)
 
 autopep:
-	autopep8  --max-line-length 120 -r -i -j 2 "$(CURDIR)/${IMAGE_NAME}" "$(CURDIR)/tests" -v -aaa
+	autopep8 --max-line-length 120 -r -i -j 2 "$(CURDIR)/${IMAGE_NAME}" "$(CURDIR)/tests" -v -aaa
+
+black:
+	black "$(CURDIR)/${IMAGE_NAME}" "$(CURDIR)/tests"
 
 reqs:
 	-@python3 -m pipreqs.pipreqs --savepath "$(CURDIR)/requirements.txt" "$(CURDIR)"
@@ -66,24 +70,3 @@ test_dist:
 
 distclean:
 	-@rm -r ./dist ./*.egg-info ./build ./docs/build ./.coverage ./docs/source/_static/coverage
-
-# docker: docker_build docker_tag docker_push
-#
-# docker_clean:
-# 	-@docker rmi ${IMAGE_NS}/${IMAGE_NAME}:${PROJ_VERSION} ${REGISTRY}/${IMAGE_NS}/${IMAGE_NAME}:${PROJ_VERSION}
-# 	-@docker rmi ${IMAGE_NS}/${IMAGE_NAME}:latest ${REGISTRY}/${IMAGE_NS}/${IMAGE_NAME}:latest
-#
-# docker_build:
-# 	docker build -t ${IMAGE_NS}/${IMAGE_NAME}:${PROJ_VERSION} -t ${IMAGE_NS}/${IMAGE_NAME}:latest .
-#
-# docker_tag:
-# 	docker tag ${IMAGE_NS}/${IMAGE_NAME}:${PROJ_VERSION} ${REGISTRY}/${IMAGE_NS}/${IMAGE_NAME}:${PROJ_VERSION}
-# 	docker tag ${IMAGE_NS}/${IMAGE_NAME}:latest ${REGISTRY}/${IMAGE_NS}/${IMAGE_NAME}:latest
-#
-# docker_push:
-# 	docker push ${REGISTRY}/${IMAGE_NS}/${IMAGE_NAME}:latest
-# 	docker push ${REGISTRY}/${IMAGE_NS}/${IMAGE_NAME}:${PROJ_VERSION}
-#
-# docker_gc:
-# 	-docker rm -v `docker ps --filter status=exited -q 2>/dev/null` 2>/dev/null
-# 	-docker rmi `docker images --filter dangling=true -q 2>/dev/null` 2>/dev/null

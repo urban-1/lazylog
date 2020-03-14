@@ -51,9 +51,9 @@ class Testlazylog(unittest.TestCase):
 
         if sys.version_info[0] >= 3:
             # Finally, check we are back in stderr
-            with self.assertLogs('lazylog', level='INFO') as cm:
+            with self.assertLogs("lazylog", level="INFO") as cm:
                 lg.info("Hello\nWorld")
-            self.assertEqual(cm.output, ['INFO:lazylog:Hello\nWorld'])
+            self.assertEqual(cm.output, ["INFO:lazylog:Hello\nWorld"])
 
     def test_002_pretty(self):
         """
@@ -88,7 +88,12 @@ class Testlazylog(unittest.TestCase):
         Get a new logger and ...
         """
         # Reset Logger
-        termSpecs = {"color": True, "splitLines": True, "level": logging.DEBUG, "pretty": False}
+        termSpecs = {
+            "color": True,
+            "splitLines": True,
+            "level": logging.DEBUG,
+            "pretty": False,
+        }
         Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=None)
 
         strio = logging.getLoggerClass().mockHandler(0)
@@ -103,7 +108,12 @@ class Testlazylog(unittest.TestCase):
         Get a new logger and ...
         """
         # Reset Logger
-        termSpecs = {"color": True, "splitLines": True, "level": logging.DEBUG, "pretty": False}
+        termSpecs = {
+            "color": True,
+            "splitLines": True,
+            "level": logging.DEBUG,
+            "pretty": False,
+        }
         Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=None)
 
         strio = logging.getLoggerClass().mockHandler(0)
@@ -117,7 +127,12 @@ class Testlazylog(unittest.TestCase):
         Get a new logger and ...
         """
         # Reset Logger
-        termSpecs = {"color": True, "splitLines": False, "level": logging.DEBUG, "pretty": False}
+        termSpecs = {
+            "color": True,
+            "splitLines": False,
+            "level": logging.DEBUG,
+            "pretty": False,
+        }
         Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=None)
 
         strio = logging.getLoggerClass().mockHandler(0)
@@ -131,7 +146,12 @@ class Testlazylog(unittest.TestCase):
         Get a new logger and ...
         """
         # Reset Logger
-        termSpecs = {"color": True, "splitLines": False, "level": logging.DEBUG, "pretty": True}
+        termSpecs = {
+            "color": True,
+            "splitLines": False,
+            "level": logging.DEBUG,
+            "pretty": True,
+        }
         Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=None)
 
         strio = logging.getLoggerClass().mockHandler(0)
@@ -194,7 +214,14 @@ class Testlazylog(unittest.TestCase):
         Remove log and test console-like formatting
         """
         rmlog()
-        fileSpecs = [{"filename": LOGFILE, "level": logging.DEBUG, "format": "console", "pretty": True}]
+        fileSpecs = [
+            {
+                "filename": LOGFILE,
+                "level": logging.DEBUG,
+                "format": "console",
+                "pretty": True,
+            }
+        ]
         termSpecs = {"color": True, "splitLines": True, "level": logging.WARNING}
         Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=fileSpecs)
 
@@ -226,7 +253,14 @@ class Testlazylog(unittest.TestCase):
         Remove log and test default formatting
         """
         rmlog()
-        fileSpecs = [{"filename": LOGFILE, "level": logging.DEBUG, "format": "console", "splitLines": False}]
+        fileSpecs = [
+            {
+                "filename": LOGFILE,
+                "level": logging.DEBUG,
+                "format": "console",
+                "splitLines": False,
+            }
+        ]
         termSpecs = {"color": True, "splitLines": True, "level": logging.WARNING}
         Logger.init(LOGDIR, termSpecs=termSpecs, fileSpecs=fileSpecs)
 
@@ -299,7 +333,9 @@ class Testlazylog(unittest.TestCase):
         """
         rmlog()
         with self.assertRaises(RuntimeError):
-            Logger.addFileLogger({"filename_": LOGFILE, "level": logging.DEBUG, "format": "json"})
+            Logger.addFileLogger(
+                {"filename_": LOGFILE, "level": logging.DEBUG, "format": "json"}
+            )
 
     def test_016_file_defaults(self):
         """
@@ -316,9 +352,10 @@ class Testlazylog(unittest.TestCase):
         termSpecs = {"color": False}
         Logger.init(
             LOGDIR,
-            fmt='%(asctime)s %(levelname)-8s %(lineno)s: %(message)s',
+            fmt="%(asctime)s %(levelname)-8s %(lineno)s: %(message)s",
             datefmt="%Y",
-            termSpecs=termSpecs)
+            termSpecs=termSpecs,
+        )
 
         strio = logging.getLoggerClass().mockHandler(0)
         logging.debug("hmmm")
@@ -329,7 +366,8 @@ class Testlazylog(unittest.TestCase):
         expect = "%s DEBUG" % now.year
         self.assertTrue(
             strio.getvalue().startswith(expect),
-            msg="Got: %s, expected: %s" % (strio.getvalue(), expect))
+            msg="Got: %s, expected: %s" % (strio.getvalue(), expect),
+        )
 
     def test_018_set_levels(self):
         """
