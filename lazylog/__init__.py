@@ -26,8 +26,6 @@ class Logger(logging.getLoggerClass()):
     - Function is included in the log format
     - File log
     - File rotation every 5M with 100 files kept
-
-
     """
 
     LOGDIR = "/var/log"
@@ -139,11 +137,7 @@ class Logger(logging.getLoggerClass()):
         elif specs["format"] == "default":
             pass
         elif specs["format"] == "json":
-            # Set to defaults
-            if "fields" not in specs:
-                specs["fields"] = JSONFormatter.FIELDS
-
-            formatter = JSONFormatter(specs["fields"])
+            formatter = JSONFormatter(specs.get("fields", JSONFormatter.FIELDS))
 
         rotFileH.setFormatter(formatter)
         rotFileH.setLevel(specs["level"])
@@ -160,7 +154,7 @@ class Logger(logging.getLoggerClass()):
         datefmt=None,
     ):
         """
-        Intialize logging based on the requested fileName. This
+        Initialize logging based on the requested fileName. This
         will create one logger (global) that writes in both file
         and terminal
 
@@ -197,18 +191,17 @@ class Logger(logging.getLoggerClass()):
 
         # Console logger
         console = logging.StreamHandler()
-        console.setLevel(termSpecs['level'])
-        if 'format' not in termSpecs:
+        console.setLevel(termSpecs["level"])
+        if "format" not in termSpecs:
             formatter = ColorFormatter(
                 fmt,
                 datefmt=datefmt,
-                color=termSpecs['color'],
-                splitLines=termSpecs['splitLines'],
-                pretty=termSpecs['pretty'])
-        elif termSpecs['format'] == 'json':
-            if 'fields' not in termSpecs:
-                termSpecs['fields'] = JSONFormatter.FIELDS
-            formatter = JSONFormatter(termSpecs['fields'])
+                color=termSpecs["color"],
+                splitLines=termSpecs["splitLines"],
+                pretty=termSpecs["pretty"],
+            )
+        elif termSpecs["format"] == "json":
+            formatter = JSONFormatter(termSpecs.get("fields", JSONFormatter.FIELDS))
         console.setFormatter(formatter)
         console.propagate = False
         root.addHandler(console)
@@ -396,8 +389,8 @@ class ColorFormatter(logging.Formatter):
         specs = merge_dicts(specs, defaults.copy())
 
         # Pretty overrides split lines
-        specs["pretty"] = specs["pretty"] if "pretty" in specs else False
-        specs["splitLines"] = specs["splitLines"] if "splitLines" in specs else False
+        specs["pretty"] = specs.get("pretty", False)
+        specs["splitLines"] = specs.get("splitLines", False)
         if specs["pretty"] and not specs["splitLines"]:
             specs["splitLines"] = True
 
