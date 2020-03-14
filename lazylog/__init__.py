@@ -118,14 +118,12 @@ class Logger(logging.getLoggerClass()):
         # Register the rotating file handler
         rotFileH = logging.handlers.RotatingFileHandler(
             filePath,
-            backupCount=specs["backupCount"]
-            if "backupCount" in specs
-            else cls.BACKUPCOUNT,
-            maxBytes=specs["maxBytes"] if "maxBytes" in specs else cls.MAXBYTES,
+            backupCount=specs.get("backupCount", cls.BACKUPCOUNT),
+            maxBytes=specs.get("maxBytes", cls.MAXBYTES),
         )
 
-        fmt = specs["fmt"] if "fmt" in specs else cls.USER_LOGFORMAT
-        datefmt = specs["datefmt"] if "datefmt" in specs else cls.USER_DATEFORMAT
+        fmt = specs.get("fmt", cls.USER_LOGFORMAT)
+        datefmt = specs.get("datefmt", cls.USER_DATEFORMAT)
 
         formatter = logging.Formatter(fmt, datefmt=datefmt)
         if "format" not in specs or specs["format"] == "console":
